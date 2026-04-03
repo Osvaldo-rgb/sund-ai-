@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from datetime import datetime, timezone
 from app.database import Base
 
@@ -16,3 +16,11 @@ class User(Base):
     email = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
     role = Column(String, default="agente")
+    
+class Message(Base):
+    __tablename__ = "messages"
+    id = Column(Integer, primary_key=True, index=True)
+    ticket_id = Column(Integer, ForeignKey("tickets.id"), nullable=False)
+    role = Column(String, nullable=False)  # "user" ou "assistant"
+    content = Column(String, nullable=False)
+    criado_em = Column(DateTime, default=lambda: datetime.now(timezone.utc))

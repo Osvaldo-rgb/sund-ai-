@@ -1,7 +1,8 @@
 # Created by venv; see https://docs.python.org/3/library/venv.html
-echo " __pydantic__/
+# cria o ficheiro .gitignore
+echo "__pycache__/
 *.pyc
 *.db
 .env
-"
-
+venv/
+.venv/" > .gitignore
