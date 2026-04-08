@@ -4,6 +4,7 @@ from app.database import get_db
 from app.models.ticket import TicketCreate
 from app.models.db_models import Ticket
 from app.core.deps import get_current_user
+from app.core.rbac import verificar_permissao, verificar_empresa
 
 router = APIRouter(prefix="/tickets", tags=["tickets"])
 
@@ -13,7 +14,13 @@ def create_ticket(
     db: Session = Depends(get_db),
     current_user: dict = Depends(get_current_user)
 ):
-    novo_ticket = Ticket(**ticket.model_dump())
+    verificar_permissao(current_user, "criar_tickets")
+
+    novo_ticket = Ticket(
+        **ticket.model_dump(),
+        empresa_id=current_user["empresa_id"],
+        criado_por=current_user.get("id")
+    )
     db.add(novo_ticket)
     db.commit()
     db.refresh(novo_ticket)
@@ -24,4 +31,12 @@ def list_tickets(
     db: Session = Depends(get_db),
     current_user: dict = Depends(get_current_user)
 ):
-    return db.query(Ticket).all()
+    verificar_permissao(current_user, "ver_tickets")
+
+    # superadmin vê tudo, outros só vêem a sua empresa
+    if current_user["role"] == "superadmin":
+        return db.query(Ticket).all()
+
+    return db.query(Ticket).filter(
+        Ticket.empresa_id == current_user["empresa_id"]
+    ).all()
