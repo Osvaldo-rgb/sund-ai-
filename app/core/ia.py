@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-GROQ_API_KEY =os.dotenv("GROQ_API_KEY")
+GROQ_API_KEY ="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"
 MODEL = "llama-3.1-8b-instant"
 
 SYSTEM_PROMPT = """És um assistente de suporte técnico interno.

@@ -14,8 +14,8 @@ def create_ticket(
     db: Session = Depends(get_db),
     current_user: dict = Depends(get_current_user)
 ):
+    verificar_empresa_obrigatoria(current_user)
     verificar_permissao(current_user, "criar_tickets")
-
     novo_ticket = Ticket(
         **ticket.model_dump(),
         empresa_id=current_user["empresa_id"],

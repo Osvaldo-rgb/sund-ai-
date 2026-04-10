@@ -28,3 +28,10 @@ def verificar_empresa(user: dict, empresa_id: int):
             status_code=403,
             detail="Sem acesso a esta empresa"
         )
+        
+def verificar_empresa_obrigatoria(user: dict):
+    if user.get("empresa_id") is None and user.get("role") != "superadmin":
+        raise HTTPException(
+            status_code=403,
+            detail="Conta sem empresa associada — contacta o administrador"
+        )
