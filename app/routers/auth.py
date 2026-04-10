@@ -82,6 +82,11 @@ def logout(
     db: Session = Depends(get_db)
 ):
     from app.models.db_models import TokenBlacklist
-    db.add(TokenBlacklist(token=token))
-    db.commit()
+    
+    # verifica se já está na blacklist
+    ja_existe = db.query(TokenBlacklist).filter(TokenBlacklist.token == token).first()
+    if not ja_existe:
+        db.add(TokenBlacklist(token=token))
+        db.commit()
+    
     return {"mensagem": "Logout efectuado com sucesso"}

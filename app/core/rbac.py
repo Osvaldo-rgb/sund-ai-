@@ -15,20 +15,14 @@ def verificar_permissao(user: dict, permissao: str):
         )
 
 def verificar_empresa(user: dict, empresa_id: int):
-    role = user.get("role")
-    user_empresa = user.get("empresa_id")
-
-    # superadmin vê tudo
-    if role == "superadmin":
+    if user.get("role") == "superadmin":
         return
-
-    # outros só vêem a sua empresa
-    if user_empresa != empresa_id:
+    if user.get("empresa_id") != empresa_id:
         raise HTTPException(
             status_code=403,
             detail="Sem acesso a esta empresa"
         )
-        
+
 def verificar_empresa_obrigatoria(user: dict):
     if user.get("empresa_id") is None and user.get("role") != "superadmin":
         raise HTTPException(
