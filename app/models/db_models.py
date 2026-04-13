@@ -40,3 +40,14 @@ class TokenBlacklist(Base):
     id = Column(Integer, primary_key=True, index=True)
     token = Column(String, unique=True, nullable=False)
     criado_em = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+    
+    id = Column(Integer, primary_key=True)
+    user_email = Column(String, nullable=True)
+    empresa_id = Column(Integer, nullable=True)
+    acao = Column(String, nullable=False)
+    detalhe = Column(String, nullable=True)
+    ip = Column(String, nullable=True)
+    criado_em = Column(DateTime, default=datetime.utcnow)

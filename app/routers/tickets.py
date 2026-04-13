@@ -5,6 +5,7 @@ from app.models.ticket import TicketCreate
 from app.models.db_models import Ticket
 from app.core.deps import get_current_user
 from app.core.rbac import verificar_permissao, verificar_empresa_obrigatoria
+from app.core.audit import registar
 
 router = APIRouter(prefix="/tickets", tags=["tickets"])
 
@@ -25,6 +26,15 @@ def create_ticket(
     db.add(novo_ticket)
     db.commit()
     db.refresh(novo_ticket)
+
+    registar(
+        db,
+        acao="CRIAR_TICKET",
+        user_email=current_user["sub"],
+        empresa_id=current_user["empresa_id"],
+        detalhe=f"ticket_id: {novo_ticket.id}"
+    )
+
     return novo_ticket
 
 @router.get("/")

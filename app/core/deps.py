@@ -7,12 +7,9 @@ from app.database import get_db
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-def get_current_user(
-    token: str = Depends(oauth2_scheme),
-    db: Session = Depends(get_db)
-):
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     from app.models.db_models import TokenBlacklist
-
+    
     bloqueado = db.query(TokenBlacklist).filter(TokenBlacklist.token == token).first()
     if bloqueado:
         raise HTTPException(status_code=401, detail="Token revogado")

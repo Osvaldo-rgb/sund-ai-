@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from app.models.db_models import AuditLog
 from jose import jwt, JWTError
 from pydantic import BaseModel, EmailStr
-
+from app.core.audit import registar
 from app.core.deps import oauth2_scheme
 from app.database import get_db
 from app.models.user import Token
@@ -68,6 +69,14 @@ def login(
     access_token = create_access_token(payload)
     refresh_token = create_refresh_token(payload)
 
+    registar(
+        db,
+        acao="LOGIN",
+        user_email=db_user.email,
+        empresa_id=db_user.empresa_id,
+        ip=request.client.host
+    )
+
     return {
         "access_token": access_token,
         "refresh_token": refresh_token,
@@ -121,14 +130,20 @@ def logout(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
-    # invalida access token
     if not db.query(TokenBlacklist).filter(TokenBlacklist.token == token).first():
         db.add(TokenBlacklist(token=token))
 
-    # invalida refresh token
     if not db.query(TokenBlacklist).filter(TokenBlacklist.token == body.refresh_token).first():
         db.add(TokenBlacklist(token=body.refresh_token))
 
     db.commit()
+
+    # busca email do token para o log
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM], 
+                           options={"verify_exp": False})
+        registar(db, acao="LOGOUT", user_email=payload.get("sub"))
+    except JWTError:
+        pass
 
     return {"mensagem": "Logout efectuado com sucesso"}

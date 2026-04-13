@@ -27,6 +27,7 @@ app.add_middleware(
 
 # routers
 app.include_router(auth.router)
-app.include_router(tickets.router)
-app.include_router(chat.router)
 app.include_router(empresas.router)
+app.include_router(chat.router)
+app.include_router(tickets.router)
+
