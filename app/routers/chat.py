@@ -5,6 +5,7 @@ from app.database import get_db, SessionLocal
 from app.models.db_models import Ticket, Message
 from app.core.ia import get_ai_response
 from app.core.deps import get_current_user
+from app.core.cache import cache
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -22,15 +23,17 @@ async def chat(
     if not ticket:
         raise HTTPException(status_code=404, detail="Ticket não encontrado")
 
-    #    depois — só as últimas 10 mensagens
-    historico = db.query(Message).filter(Message.ticket_id == ticket_id).all()
+    # verifica cache primeiro
+    resposta_cache = cache.get(ticket_id, body.mensagem)
+    if resposta_cache:
+        return {"resposta": resposta_cache, "fonte": "cache"}
 
     historico = db.query(Message).filter(
         Message.ticket_id == ticket_id
     ).order_by(Message.id.desc()).limit(10).all()
     historico = list(reversed(historico))
-    mensagens = [{"role": m.role, "content": m.content} for m in historico]
 
+    mensagens = [{"role": m.role, "content": m.content} for m in historico]
     contexto = f"Ticket: {ticket.titulo}\nDescrição: {ticket.descricao}"
     mensagens_com_contexto = [{"role": "user", "content": contexto}] + mensagens
     mensagens_com_contexto.append({"role": "user", "content": body.mensagem})
@@ -39,10 +42,13 @@ async def chat(
 
     resposta = await get_ai_response(mensagens_com_contexto)
 
+    # guarda na cache
+    cache.set(ticket_id, body.mensagem, resposta)
+
     db.add(Message(ticket_id=ticket_id, role="assistant", content=resposta))
     db.commit()
 
-    return {"resposta": resposta}
+    return {"resposta": resposta, "fonte": "ia"}
 
 @router.get("/{ticket_id}/historico")
 def historico(
