@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SundAI - Assistente Clínico</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', system_ui, sans-serif; }
+    .chat-container { scrollbar-width: thin; }
+    .message-bubble { max-width: 85%; }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <div class="w-80 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col">
+    <div class="p-6 border-b border-gray-200 dark:border-gray-800">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <i class="fas fa-heartbeat text-3xl text-emerald-500"></i>
+          <h1 class="text-2xl font-bold tracking-tight">SundAI</h1>
+        </div>
+        <button onclick="toggleTheme()" 
+                class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <i id="theme-icon" class="fas fa-moon text-xl"></i>
+        </button>
+      </div>
+      <p class="text-emerald-500 text-sm mt-1">Inteligência Clínica</p>
+    </div>
+
+    <div class="p-4">
+      <button onclick="newChat()" 
+              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl flex items-center justify-center gap-2 font-medium transition-colors">
+        <i class="fas fa-plus"></i> Novo Caso Clínico
+      </button>
+    </div>
+
+    <!-- Lista de Casos Clínicos -->
+    <div class="px-4 py-2 text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400">Meus Casos Clínicos</div>
+    <div id="cases-list" class="flex-1 overflow-y-auto px-3 space-y-1 text-sm">
+      <!-- Preenchido dinamicamente -->
+    </div>
+
+    <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+      <div id="user-info" class="flex items-center gap-3 px-3 py-2">
+        <!-- Preenchido após login -->
+      </div>
+      <button onclick="logout()" 
+              class="mt-4 w-full text-red-500 hover:text-red-600 flex items-center justify-center gap-2 py-2 text-sm">
+        <i class="fas fa-sign-out-alt"></i> Terminar Sessão
+      </button>
+    </div>
+  </div>
+
+  <!-- Área Principal -->
+  <div class="flex-1 flex flex-col">
+    <div class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between">
+      <h2 id="chat-title" class="font-semibold text-lg">Assistente Clínico SundAI</h2>
+      <div class="flex items-center gap-4 text-sm">
+        <span id="status" class="flex items-center gap-1.5 text-emerald-500">
+          <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+          Online
+        </span>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div id="chat-container" class="flex-1 overflow-y-auto p-6 chat-container bg-gray-50 dark:bg-gray-950 space-y-8">
+      <!-- Mensagens -->
+    </div>
+
+    <!-- Input -->
+    <div class="p-6 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      <div class="max-w-4xl mx-auto">
+        <div class="relative">
+          <textarea id="user-input" rows="2"
+                    class="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-3xl px-6 py-4 pr-28 focus:outline-none focus:border-emerald-500 resize-y min-h-[56px]"
+                    placeholder="Descreva o caso clínico ou faça uma pergunta..."></textarea>
+          
+          <button onclick="sendMessage()" 
+                  class="absolute bottom-4 right-6 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-2xl flex items-center gap-2 transition-all">
+            Enviar <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Login -->
+<div id="login-modal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
+  <div class="bg-white dark:bg-gray-900 p-8 rounded-3xl w-full max-w-md shadow-2xl">
+    <h2 class="text-2xl font-bold mb-6 text-center">Entrar no SundAI</h2>
+    <input id="login-email" type="email" placeholder="Email" 
+           class="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl px-5 py-3 mb-3 focus:outline-none">
+    <input id="login-password" type="password" placeholder="Password" 
+           class="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-2xl px-5 py-3 mb-6 focus:outline-none">
+    
+    <button onclick="performLogin()" 
+            class="w-full bg-emerald-600 hover:bg-emerald-700 py-3.5 rounded-2xl font-medium text-white">
+      Entrar
+    </button>
+    <p id="login-error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
+  </div>
+</div>
+
+<script>
+// ===================== CONFIG =====================
+const API_BASE = "http://127.0.0.1:8000";
+let token = localStorage.getItem("sundai_token");
+let currentUser = null;
+let currentChatId = null;
+let messages = [];
+
+// ===================== TEMA =====================
+function toggleTheme() {
+  document.documentElement.classList.toggle("dark");
+  const isDark = document.documentElement.classList.contains("dark");
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const icon = document.getElementById("theme-icon");
+  if (document.documentElement.classList.contains("dark")) {
+    icon.classList.remove("fa-moon");
+    icon.classList.add("fa-sun");
+  } else {
+    icon.classList.remove("fa-sun");
+    icon.classList.add("fa-moon");
+  }
+}
+
+// ===================== AUTH =====================
+async function performLogin() {
+  const email = document.getElementById("login-email").value.trim();
+  const password = document.getElementById("login-password").value;
+
+  if (!email || !password) return showLoginError("Preencha todos os campos");
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ username: email, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("sundai_token", data.access_token);
+      token = data.access_token;
+      document.getElementById("login-modal").classList.add("hidden");
+      await loadCurrentUser();
+      initApp();
+    } else {
+      showLoginError(data.detail || "Credenciais inválidas");
+    }
+  } catch (e) {
+    showLoginError("Erro de conexão com o servidor");
+  }
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById("login-error");
+  el.textContent = msg;
+  el.classList.remove("hidden");
+}
+
+async function loadCurrentUser() {
+  try {
+    const res = await fetch(`${API_BASE}/auth/me`, {   // Vamos criar este endpoint depois
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    if (res.ok) currentUser = await res.json();
+  } catch (e) {}
+}
+
+// ===================== CASOS CLÍNICOS (Sidebar) =====================
+async function loadCases() {
+  if (!token) return;
+  const container = document.getElementById("cases-list");
+  container.innerHTML = `<div class="text-center py-8 text-gray-400"><i class="fas fa-spinner fa-spin"></i></div>`;
+
+  try {
+    const res = await fetch(`${API_BASE}/casos-clinicos`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    if (res.ok) {
+      const cases = await res.json();
+      container.innerHTML = "";
+
+      if (cases.length === 0) {
+        container.innerHTML = `<p class="text-center text-gray-400 py-8">Nenhum caso ainda</p>`;
+        return;
+      }
+
+      cases.forEach(caso => {
+        const div = document.createElement("div");
+        div.className = "px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl cursor-pointer transition-colors";
+        div.innerHTML = `
+          <div class="font-medium text-sm">${caso.titulo}</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400">${new Date(caso.criado_em).toLocaleDateString('pt-PT')}</div>
+        `;
+        div.onclick = () => openCase(caso.id);
+        container.appendChild(div);
+      });
+    }
+  } catch (e) {
+    container.innerHTML = `<p class="text-red-400 text-center py-4">Erro ao carregar casos</p>`;
+  }
+}
+
+// ===================== CHAT =====================
+function addMessage(role, content) {
+  messages.push({ role, content });
+  const container = document.getElementById("chat-container");
+
+  const div = document.createElement("div");
+  div.className = `flex ${role === "user" ? "justify-end" : "justify-start"} message-bubble`;
+  div.innerHTML = `
+    <div class="${role === "user" 
+      ? "bg-emerald-600 text-white" 
+      : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"} 
+      rounded-3xl px-6 py-4 shadow-sm">
+      <p class="whitespace-pre-wrap">${content}</p>
+    </div>
+  `;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById("user-input");
+  const text = input.value.trim();
+  if (!text || !token) return;
+
+  addMessage("user", text);
+  input.value = "";
+
+  const loadingId = "load-" + Date.now();
+  const container = document.getElementById("chat-container");
+  container.innerHTML += `
+    <div id="${loadingId}" class="flex justify-start">
+      <div class="bg-white dark:bg-gray-800 rounded-3xl px-6 py-4 flex items-center gap-3">
+        <i class="fas fa-spinner fa-spin text-emerald-500"></i>
+        <span class="text-gray-500 dark:text-gray-400">A pensar...</span>
+      </div>
+    </div>`;
+  container.scrollTop = container.scrollHeight;
+
+  try {
+    const res = await fetch(`${API_BASE}/medical-chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ mensagem: text, historico: messages })
+    });
+
+    const data = await res.json();
+    document.getElementById(loadingId).remove();
+
+    if (res.ok) {
+      addMessage("assistant", data.resposta);
+    } else {
+      addMessage("assistant", "Erro ao obter resposta.");
+    }
+  } catch (err) {
+    document.getElementById(loadingId).remove();
+    addMessage("assistant", "Erro de conexão.");
+  }
+}
+
+function newChat() {
+  currentChatId = null;
+  messages = [];
+  document.getElementById("chat-container").innerHTML = `
+    <div class="h-full flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
+      <i class="fas fa-stethoscope text-6xl mb-6 opacity-40"></i>
+      <p class="text-lg">Como posso ajudar no caso de hoje?</p>
+    </div>`;
+}
+
+// ===================== INIT =====================
+function initApp() {
+  if (!token) {
+    document.getElementById("login-modal").classList.remove("hidden");
+    return;
+  }
+
+  // Carregar nome do utilizador (simulado por enquanto)
+  document.getElementById("user-info").innerHTML = `
+    <i class="fas fa-user-circle text-2xl text-emerald-500"></i>
+    <div>
+      <div id="user-name" class="font-medium">Dr. Utilizador</div>
+      <div class="text-xs text-gray-500">Médico</div>
+    </div>
+  `;
+
+  loadCases();
+  newChat();
+}
+
+window.onload = () => {
+  // Carregar tema salvo
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark");
+  }
+  updateThemeIcon();
+
+  initApp();
+};
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from jose import jwt
 import bcrypt
 
-SECRET_KEY = "supportai-secret-123"
+SECRET_KEY = "sundai-secret-123"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 15      # access token: 15 minutos
 REFRESH_TOKEN_EXPIRE_DAYS = 7         # refresh token: 7 dias
