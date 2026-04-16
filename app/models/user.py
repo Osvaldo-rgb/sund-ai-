@@ -1,9 +1,8 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from typing import Optional
 
 class ProfissionalCreate(BaseModel):
-    """Modelo usado no registo de novos profissionais de saúde"""
-    email: EmailStr
+    email: str                    # ← Mudado de EmailStr para str (temporário)
     password: str
     nome_completo: str
     especialidade: Optional[str] = None
@@ -11,7 +10,6 @@ class ProfissionalCreate(BaseModel):
 
 
 class Token(BaseModel):
-    """Resposta padrão de autenticação"""
     access_token: str
     refresh_token: str
     token_type: str = "bearer"
