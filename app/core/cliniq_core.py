@@ -9,7 +9,10 @@ from app.models.db_models import CasoClinico
 load_dotenv()
 
 # ===================== CONFIGURAÇÃO =====================
-GROQ_API_KEY = os.load_dotenv("GROQ_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+if not GROQ_API_KEY:
+    print(" AVISO: GROQ_API_KEY não encontrada no .env")
 
 # Usa um modelo bom e equilibrado (podes mudar se quiseres)
 MODEL = "llama-3.1-8b-instant"      # Bom para raciocínio clínico

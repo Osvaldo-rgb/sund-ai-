@@ -6,10 +6,6 @@
   <meta name="theme-color" content="#0f766e">
   <title>sundai</title>
 
-  <!-- PWA Support -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -48,11 +44,23 @@
 <div class="flex h-screen overflow-hidden">
 
   <!-- Sidebar -->
-  <div class="w-72 bg-sund-surface dark:bg-sund-surface-dark border-r border-sund-muted/10 flex flex-col md:block hidden">
+  <div id="sidebar" class="w-72 bg-sund-surface dark:bg-sund-surface-dark border-r border-sund-muted/10 flex flex-col transition-transform duration-300 md:translate-x-0 -translate-x-full">
+
     <div class="p-6 flex items-center gap-3 border-b border-sund-muted/10">
-      <div class="w-9 h-9 bg-sund-primary rounded-2xl flex items-center justify-center">
-        <i class="fas fa-heartbeat text-white text-xl"></i>
-      </div>
+      <!-- Ícone SVG do Coala -->
+      <svg width="36" height="36" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="256" cy="256" r="256" fill="#0f766e"/>
+        <ellipse cx="256" cy="225" rx="92" ry="82" fill="#f1f5f9"/>
+        <circle cx="185" cy="170" r="42" fill="#f1f5f9"/>
+        <circle cx="327" cy="170" r="42" fill="#f1f5f9"/>
+        <circle cx="225" cy="215" r="13" fill="#134e4a"/>
+        <circle cx="287" cy="215" r="13" fill="#134e4a"/>
+        <ellipse cx="256" cy="240" rx="19" ry="15" fill="#134e4a"/>
+        <path d="M235 255 Q256 267 277 255" stroke="#134e4a" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M310 275 Q380 230 405 305" stroke="#14b8a6" stroke-width="32" stroke-linecap="round" fill="none"/>
+        <circle cx="405" cy="310" r="26" fill="#14b8a6"/>
+        <circle cx="405" cy="310" r="14" fill="#0f766e"/>
+      </svg>
       <h1 class="text-2xl font-semibold tracking-tighter">sundai</h1>
     </div>
 
@@ -91,7 +99,7 @@
       </div>
     </div>
 
-    <!-- Chat Area -->
+    <!-- Chat Container -->
     <div id="chat-container" class="flex-1 overflow-y-auto p-5 md:p-6 bg-sund-bg dark:bg-sund-bg-dark space-y-8"></div>
 
     <!-- Input -->
@@ -115,9 +123,9 @@
   <div class="bg-sund-surface dark:bg-sund-surface-dark p-8 rounded-3xl w-full max-w-md mx-4">
     <h2 class="text-2xl font-semibold text-center mb-8">entrar no sundai</h2>
     <input id="login-email" type="email" placeholder="email" 
-           class="w-full bg-sund-bg dark:bg-sund-surface-dark border border-sund-muted/30 rounded-2xl px-5 py-3.5 mb-3 focus:outline-none">
+           class="w-full bg-sund-bg dark:bg-sund-surface-dark border border-sund-muted/30 rounded-2xl px-5 py-3.5 mb-3">
     <input id="login-password" type="password" placeholder="password" 
-           class="w-full bg-sund-bg dark:bg-sund-surface-dark border border-sund-muted/30 rounded-2xl px-5 py-3.5 mb-6 focus:outline-none">
+           class="w-full bg-sund-bg dark:bg-sund-surface-dark border border-sund-muted/30 rounded-2xl px-5 py-3.5 mb-6">
     
     <button onclick="performLogin()" 
             class="w-full bg-sund-primary hover:bg-sund-primary-light py-4 rounded-2xl font-medium text-white">
@@ -133,6 +141,12 @@ const API_BASE = "http://127.0.0.1:8000";
 let token = localStorage.getItem("sundai_access_token");
 let messages = [];
 
+// ===================== MOBILE SIDEBAR =====================
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  sidebar.classList.toggle("-translate-x-full");
+}
+
 // ===================== TEMA =====================
 function toggleTheme() {
   document.documentElement.classList.toggle("dark");
@@ -140,142 +154,14 @@ function toggleTheme() {
 }
 
 // ===================== AUTH =====================
-async function performLogin() {
-  const email = document.getElementById("login-email").value.trim();
-  const password = document.getElementById("login-password").value;
-
-  if (!email || !password) return showLoginError("Preencha email e password");
-
-  try {
-    const res = await fetch(`${API_BASE}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ username: email, password: password })
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      localStorage.setItem("sundai_access_token", data.access_token);
-      token = data.access_token;
-      document.getElementById("login-modal").classList.add("hidden");
-      await loadCurrentUser();
-      initApp();
-    } else {
-      showLoginError(data.detail || "Credenciais inválidas");
-    }
-  } catch (e) {
-    showLoginError("Erro de conexão");
-  }
-}
-
-function showLoginError(msg) {
-  const el = document.getElementById("login-error");
-  el.textContent = msg;
-  el.classList.remove("hidden");
-}
-
-async function loadCurrentUser() {
-  if (!token) return;
-  try {
-    const res = await fetch(`${API_BASE}/auth/me`, {
-      headers: { "Authorization": `Bearer ${token}` }
-    });
-    if (res.ok) {
-      const user = await res.json();
-      document.getElementById("user-info").innerHTML = `
-        <i class="fas fa-user-circle text-2xl text-sund-primary"></i>
-        <div>
-          <div class="font-medium">Dr. ${user.nome_completo || 'Utilizador'}</div>
-          <div class="text-xs text-sund-muted">${user.especialidade || 'Médico'}</div>
-        </div>
-      `;
-    }
-  } catch (e) {
-    console.error("Erro ao carregar perfil:", e);
-  }
-}
-
-function logout() {
-  localStorage.removeItem("sundai_access_token");
-  window.location.reload();
-}
+async function performLogin() { /* mantém tua função atual */ }
+async function loadCurrentUser() { /* mantém tua função atual */ }
+function logout() { localStorage.removeItem("sundai_access_token"); window.location.reload(); }
 
 // ===================== CHAT =====================
-function addMessage(role, content) {
-  messages.push({ role, content });
-  const container = document.getElementById("chat-container");
-
-  const div = document.createElement("div");
-  div.className = `flex ${role === "user" ? "justify-end" : "justify-start"} message-bubble`;
-  div.innerHTML = `
-    <div class="${role === "user" 
-      ? "bg-sund-primary text-white" 
-      : "bg-sund-surface dark:bg-sund-surface-dark border border-sund-muted/20"} 
-      rounded-3xl px-6 py-4">
-      <p class="whitespace-pre-wrap">${content}</p>
-    </div>
-  `;
-  container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
-}
-
-async function sendMessage() {
-  const input = document.getElementById("user-input");
-  const text = input.value.trim();
-  if (!text || !token) return;
-
-  addMessage("user", text);
-  input.value = "";
-
-  const loadingId = "loading-" + Date.now();
-  const container = document.getElementById("chat-container");
-  container.innerHTML += `
-    <div id="${loadingId}" class="flex justify-start">
-      <div class="bg-sund-surface dark:bg-sund-surface-dark rounded-3xl px-6 py-4 flex items-center gap-3">
-        <i class="fas fa-spinner fa-spin text-sund-primary"></i>
-        <span class="text-sund-muted">A pensar...</span>
-      </div>
-    </div>`;
-  container.scrollTop = container.scrollHeight;
-
-  try {
-    const res = await fetch(`${API_BASE}/medical-chat`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({ mensagem: text, historico: messages })
-    });
-
-    const data = await res.json();
-    document.getElementById(loadingId).remove();
-
-    if (res.ok) {
-      addMessage("assistant", data.resposta);
-    } else {
-      addMessage("assistant", `Erro: ${data.detail || "Falha na resposta"}`);
-    }
-  } catch (err) {
-    document.getElementById(loadingId).remove();
-    addMessage("assistant", "Erro de conexão com o servidor.");
-  }
-}
-
-function newChat() {
-  messages = [];
-  document.getElementById("chat-container").innerHTML = `
-    <div class="h-full flex flex-col items-center justify-center text-center text-sund-muted">
-      <i class="fas fa-stethoscope text-6xl mb-6 opacity-40"></i>
-      <p class="text-lg">Como posso ajudar hoje?</p>
-    </div>`;
-}
-
-function toggleSidebar() {
-  // Para versão mobile futura
-  alert("Sidebar em desenvolvimento");
-}
+function addMessage(role, content) { /* mantém tua função atual */ }
+async function sendMessage() { /* mantém tua função atual */ }
+function newChat() { /* mantém tua função atual */ }
 
 // ===================== INIT =====================
 async function initApp() {

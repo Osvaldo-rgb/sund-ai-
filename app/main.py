@@ -130,16 +130,16 @@ async def app_info():
 # EXECUÇÃO DIRETA (opcional)
 # =========================
 
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", )
+    import os
+    
     logger.info("Iniciando servidor Uvicorn...")
+    
     uvicorn.run(
         "app.main:app",
         host="0.0.0.0",
-        port=8000,
-        reload=settings.is_development,
-        log_level="info",
-        port=int(os.getenv("PORT", 8000))
-        
+        port=int(os.getenv("PORT", 8000)),   # ← Correto (sem repetição)
+        reload=settings.is_development
     )
