@@ -9,10 +9,10 @@ from app.models.db_models import CasoClinico
 load_dotenv()
 
 # ===================== CONFIGURAÇÃO =====================
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_API_KEY = os.load_dotenv("GROQ_API_KEY")
 
 # Usa um modelo bom e equilibrado (podes mudar se quiseres)
-MODEL = "llama-3.1-70b-versatile"      # Bom para raciocínio clínico
+MODEL = "llama-3.1-8b-instant"      # Bom para raciocínio clínico
 # MODEL = "llama-3.1-8b-instant"       # Mais rápido e barato (para testes)
 
 SYSTEM_PROMPT_CLINICO = """És o CliniqCore, um assistente clínico inteligente e experiente, projetado para apoiar profissionais de saúde em Angola e países lusófonos.

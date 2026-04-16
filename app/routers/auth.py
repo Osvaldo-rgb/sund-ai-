@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from jose import JWTError
-
-from app.core.deps import oauth2_scheme
+from pydantic import BaseModel
+from app.core.deps import oauth2_scheme, get_current_user
 from app.database import get_db
 from app.models.user import ProfissionalCreate, Token, RefreshRequest
 from app.models.db_models import ProfissionalSaude, TokenBlacklist
@@ -22,6 +22,7 @@ def register(
     profissional: ProfissionalCreate,
     db: Session = Depends(get_db)
 ):
+    """Registo de novo profissional de saúde"""
     existe = db.query(ProfissionalSaude).filter(
         ProfissionalSaude.email == profissional.email
     ).first()
@@ -36,7 +37,7 @@ def register(
             nome_completo=profissional.nome_completo,
             especialidade=profissional.especialidade,
             numero_licenca=profissional.numero_licenca,
-            role="medico"
+            role="medico"   # default
         )
         db.add(novo)
         db.commit()
@@ -55,10 +56,11 @@ def register(
 @router.post("/login", response_model=Token)
 @limiter.limit("5/minute")
 def login(
-    request: Request,                                   # ← Obrigatório para rate limiter
+    request: Request,
     form: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
+    """Login com email e password"""
     db_user = db.query(ProfissionalSaude).filter(
         ProfissionalSaude.email == form.username
     ).first()
@@ -66,6 +68,7 @@ def login(
     if not db_user or not verify_password(form.password, db_user.password_hash):
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
 
+    # Payload CORRETO - inclui unidade_saude_id
     payload = {
         "sub": db_user.email,
         "role": db_user.role,
@@ -86,7 +89,7 @@ def login(
 @router.post("/refresh", response_model=Token)
 @limiter.limit("10/minute")
 def refresh(
-    request: Request,                                   # ← CORREÇÃO: Adicionado aqui!
+    request: Request,
     body: RefreshRequest,
     db: Session = Depends(get_db)
 ):
@@ -108,6 +111,7 @@ def refresh(
     if not db_user:
         raise HTTPException(status_code=401, detail="Profissional não encontrado")
 
+    # Payload CORRETO também no refresh
     new_payload = {
         "sub": db_user.email,
         "role": db_user.role,
@@ -128,6 +132,7 @@ def logout(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
+    """Invalida tokens de acesso e refresh"""
     if not db.query(TokenBlacklist).filter(TokenBlacklist.token == token).first():
         db.add(TokenBlacklist(token=token))
 
@@ -136,3 +141,77 @@ def logout(
 
     db.commit()
     return {"mensagem": "Logout efectuado com sucesso"}
+
+
+# ===================== ENDPOINT /auth/me =====================
+@router.get("/me")
+def get_current_profile(
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Retorna os dados completos do profissional autenticado"""
+    profissional = db.query(ProfissionalSaude).filter(
+        ProfissionalSaude.email == current_user["email"]
+    ).first()
+
+    if not profissional:
+        raise HTTPException(status_code=404, detail="Profissional não encontrado")
+
+    return {
+        "id": profissional.id,
+        "email": profissional.email,
+        "nome_completo": profissional.nome_completo,
+        "especialidade": profissional.especialidade,
+        "numero_licenca": profissional.numero_licenca,
+        "role": profissional.role,
+        "unidade_saude_id": profissional.unidade_saude_id
+    }
+    
+# ===================== PROMOÇÃO DE UTILIZADORES =====================
+class PromoverRequest(BaseModel):
+    email: str
+    role: str
+
+
+@router.put("/promover")
+def promover_utilizador(
+    body: PromoverRequest,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user)
+):
+    """
+    Apenas Superadmin pode promover utilizadores para outros roles.
+    """
+    if current_user.get("role") != "superadmin":
+        raise HTTPException(
+            status_code=403, 
+            detail="Apenas superadministradores podem promover utilizadores"
+        )
+
+    roles_validos = ["medico", "enfermeiro", "admin_clinica", "superadmin"]
+
+    if body.role not in roles_validos:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Role inválido. Roles permitidos: {roles_validos}"
+        )
+
+    utilizador = db.query(ProfissionalSaude).filter(
+        ProfissionalSaude.email == body.email
+    ).first()
+
+    if not utilizador:
+        raise HTTPException(status_code=404, detail="Utilizador não encontrado")
+
+    if utilizador.role == body.role:
+        return {"mensagem": f"{body.email} já possui o role {body.role}"}
+
+    antigo_role = utilizador.role
+    utilizador.role = body.role
+    db.commit()
+
+    return {
+        "mensagem": f"Utilizador {body.email} promovido com sucesso",
+        "de": antigo_role,
+        "para": body.role
+    }

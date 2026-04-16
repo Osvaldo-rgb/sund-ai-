@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0f766e">
+  <title>sundai</title>
+
+  <!-- PWA Support -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            sund: {
+              primary: '#0f766e',
+              'primary-light': '#14b8a6',
+              accent: '#5eead4',
+              bg: '#f8fafc',
+              'bg-dark': '#0f172a',
+              surface: '#ffffff',
+              'surface-dark': '#1e2937',
+              text: '#0f172a',
+              'text-dark': '#e2e8f0',
+              muted: '#64748b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', system_ui, sans-serif; }
+    .chat-container { scrollbar-width: thin; }
+    textarea { resize: none; }
+  </style>
+</head>
+<body class="bg-sund-bg dark:bg-sund-bg-dark text-sund-text dark:text-sund-text-dark min-h-screen">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <div class="w-72 bg-sund-surface dark:bg-sund-surface-dark border-r border-sund-muted/10 flex flex-col md:block hidden">
+    <div class="p-6 flex items-center gap-3 border-b border-sund-muted/10">
+      <div class="w-9 h-9 bg-sund-primary rounded-2xl flex items-center justify-center">
+        <i class="fas fa-heartbeat text-white text-xl"></i>
+      </div>
+      <h1 class="text-2xl font-semibold tracking-tighter">sundai</h1>
+    </div>
+
+    <div class="p-4">
+      <button onclick="newChat()" 
+              class="w-full bg-sund-primary hover:bg-sund-primary-light text-white py-3.5 rounded-3xl font-medium flex items-center justify-center gap-2 transition-all">
+        <i class="fas fa-plus"></i>
+        Novo Caso Clínico
+      </button>
+    </div>
+
+    <div class="px-6 py-3 text-xs font-medium text-sund-muted tracking-widest">MEUS CASOS</div>
+    <div id="cases-list" class="flex-1 overflow-y-auto px-4 space-y-1"></div>
+
+    <div class="p-6 border-t border-sund-muted/10">
+      <div id="user-info" class="flex items-center gap-3 px-3 py-2 rounded-2xl hover:bg-sund-muted/10"></div>
+      <button onclick="logout()" 
+              class="mt-6 w-full flex items-center justify-center gap-2 text-red-500 hover:text-red-600 py-2 text-sm">
+        <i class="fas fa-sign-out-alt"></i> Terminar Sessão
+      </button>
+    </div>
+  </div>
+
+  <!-- Área Principal -->
+  <div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <div class="h-14 bg-sund-surface dark:bg-sund-surface-dark border-b border-sund-muted/10 flex items-center px-5">
+      <button onclick="toggleSidebar()" class="md:hidden mr-4 text-2xl text-sund-muted">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h2 id="chat-title" class="font-medium text-lg">assistente clínico</h2>
+      
+      <div class="ml-auto flex items-center gap-2 text-sund-muted text-sm">
+        <i class="fas fa-circle text-xs text-sund-primary"></i>
+        online
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div id="chat-container" class="flex-1 overflow-y-auto p-5 md:p-6 bg-sund-bg dark:bg-sund-bg-dark space-y-8"></div>
+
+    <!-- Input -->
+    <div class="p-5 bg-sund-surface dark:bg-sund-surface-dark border-t border-sund-muted/10">
+      <div class="max-w-3xl mx-auto relative">
+        <textarea id="user-input" rows="1"
+                  class="w-full bg-sund-bg dark:bg-sund-surface-dark border border-sund-muted/20 rounded-3xl px-6 py-4 pr-16 focus:outline-none focus:border-sund-primary resize-y text-base"
+                  placeholder="Descreva o caso clínico..."></textarea>
+        
+        <button onclick="sendMessage()" 
+                class="absolute right-4 bottom-3 bg-sund-primary hover:bg-sund-primary-light text-white p-3.5 rounded-2xl transition-all">
+          <i class="fas fa-arrow-up"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Login -->
+<div id="login-modal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
+  <div class="bg-sund-surface dark:bg-sund-surface-dark p-8 rounded-3xl w-full max-w-md mx-4">
+    <h2 class="text-2xl font-semibold text-center mb-8">entrar no sundai</h2>
+    <input id="login-email" type="email" placeholder="email" 
+           class="w-full bg-sund-bg dark:bg-sund-surface-dark border border-sund-muted/30 rounded-2xl px-5 py-3.5 mb-3 focus:outline-none">
+    <input id="login-password" type="password" placeholder="password" 
+           class="w-full bg-sund-bg dark:bg-sund-surface-dark border border-sund-muted/30 rounded-2xl px-5 py-3.5 mb-6 focus:outline-none">
+    
+    <button onclick="performLogin()" 
+            class="w-full bg-sund-primary hover:bg-sund-primary-light py-4 rounded-2xl font-medium text-white">
+      Entrar
+    </button>
+    <p id="login-error" class="text-red-500 text-sm mt-4 text-center hidden"></p>
+  </div>
+</div>
+
+<script>
+// ===================== CONFIG =====================
+const API_BASE = "http://127.0.0.1:8000";
+let token = localStorage.getItem("sundai_access_token");
+let messages = [];
+
+// ===================== TEMA =====================
+function toggleTheme() {
+  document.documentElement.classList.toggle("dark");
+  localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
+}
+
+// ===================== AUTH =====================
+async function performLogin() {
+  const email = document.getElementById("login-email").value.trim();
+  const password = document.getElementById("login-password").value;
+
+  if (!email || !password) return showLoginError("Preencha email e password");
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ username: email, password: password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("sundai_access_token", data.access_token);
+      token = data.access_token;
+      document.getElementById("login-modal").classList.add("hidden");
+      await loadCurrentUser();
+      initApp();
+    } else {
+      showLoginError(data.detail || "Credenciais inválidas");
+    }
+  } catch (e) {
+    showLoginError("Erro de conexão");
+  }
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById("login-error");
+  el.textContent = msg;
+  el.classList.remove("hidden");
+}
+
+async function loadCurrentUser() {
+  if (!token) return;
+  try {
+    const res = await fetch(`${API_BASE}/auth/me`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    if (res.ok) {
+      const user = await res.json();
+      document.getElementById("user-info").innerHTML = `
+        <i class="fas fa-user-circle text-2xl text-sund-primary"></i>
+        <div>
+          <div class="font-medium">Dr. ${user.nome_completo || 'Utilizador'}</div>
+          <div class="text-xs text-sund-muted">${user.especialidade || 'Médico'}</div>
+        </div>
+      `;
+    }
+  } catch (e) {
+    console.error("Erro ao carregar perfil:", e);
+  }
+}
+
+function logout() {
+  localStorage.removeItem("sundai_access_token");
+  window.location.reload();
+}
+
+// ===================== CHAT =====================
+function addMessage(role, content) {
+  messages.push({ role, content });
+  const container = document.getElementById("chat-container");
+
+  const div = document.createElement("div");
+  div.className = `flex ${role === "user" ? "justify-end" : "justify-start"} message-bubble`;
+  div.innerHTML = `
+    <div class="${role === "user" 
+      ? "bg-sund-primary text-white" 
+      : "bg-sund-surface dark:bg-sund-surface-dark border border-sund-muted/20"} 
+      rounded-3xl px-6 py-4">
+      <p class="whitespace-pre-wrap">${content}</p>
+    </div>
+  `;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById("user-input");
+  const text = input.value.trim();
+  if (!text || !token) return;
+
+  addMessage("user", text);
+  input.value = "";
+
+  const loadingId = "loading-" + Date.now();
+  const container = document.getElementById("chat-container");
+  container.innerHTML += `
+    <div id="${loadingId}" class="flex justify-start">
+      <div class="bg-sund-surface dark:bg-sund-surface-dark rounded-3xl px-6 py-4 flex items-center gap-3">
+        <i class="fas fa-spinner fa-spin text-sund-primary"></i>
+        <span class="text-sund-muted">A pensar...</span>
+      </div>
+    </div>`;
+  container.scrollTop = container.scrollHeight;
+
+  try {
+    const res = await fetch(`${API_BASE}/medical-chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ mensagem: text, historico: messages })
+    });
+
+    const data = await res.json();
+    document.getElementById(loadingId).remove();
+
+    if (res.ok) {
+      addMessage("assistant", data.resposta);
+    } else {
+      addMessage("assistant", `Erro: ${data.detail || "Falha na resposta"}`);
+    }
+  } catch (err) {
+    document.getElementById(loadingId).remove();
+    addMessage("assistant", "Erro de conexão com o servidor.");
+  }
+}
+
+function newChat() {
+  messages = [];
+  document.getElementById("chat-container").innerHTML = `
+    <div class="h-full flex flex-col items-center justify-center text-center text-sund-muted">
+      <i class="fas fa-stethoscope text-6xl mb-6 opacity-40"></i>
+      <p class="text-lg">Como posso ajudar hoje?</p>
+    </div>`;
+}
+
+function toggleSidebar() {
+  // Para versão mobile futura
+  alert("Sidebar em desenvolvimento");
+}
+
+// ===================== INIT =====================
+async function initApp() {
+  if (!token) {
+    document.getElementById("login-modal").classList.remove("hidden");
+    return;
+  }
+  await loadCurrentUser();
+  newChat();
+}
+
+window.onload = () => {
+  if (localStorage.getItem("theme") === "dark") document.documentElement.classList.add("dark");
+  initApp();
+};
+</script>
+</body>
+</html>
