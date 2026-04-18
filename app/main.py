@@ -42,11 +42,17 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 init_db()
 
 # ====================== ROUTERS ======================
+
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(medical_chat_router, prefix="/medical-chat", tags=["chat"])
-app.include_router(casos_clinicos_router, prefix="/casos-clinicos", tags=["casos"])
-app.include_router(cliniq_router, prefix="/cliniq", tags=["cliniq"])
-app.include_router(unidades_saude_router, prefix="/unidades-saude", tags=["unidades"])
+
+# Inclui os outros apenas se existirem
+if casos_clinicos_router:
+    app.include_router(casos_clinicos_router, prefix="/casos-clinicos", tags=["casos"])
+if cliniq_router:
+    app.include_router(cliniq_router, prefix="/cliniq", tags=["cliniq"])
+if unidades_saude_router:
+    app.include_router(unidades_saude_router, prefix="/unidades-saude", tags=["unidades"])
 
 @app.get("/health")
 async def health_check():
