@@ -8,7 +8,7 @@ from app.core.cliniq_core import get_cliniq_response
 from app.core.deps import get_current_user
 from app.core.rbac import verificar_unidade_obrigatoria
 
-router = APIRouter(prefix="/medical-chat", tags=["medical-chat"])
+router = APIRouter(tags=["medical-chat"])
 
 
 # ===================== MODELOS DE ENTRADA =====================
@@ -25,7 +25,7 @@ class MedicalChatResponse(BaseModel):
 
 
 # ===================== ENDPOINT PRINCIPAL =====================
-@router.post("/", response_model=MedicalChatResponse)
+@router.post("", response_model=MedicalChatResponse)
 async def medical_chat(
     body: MedicalChatRequest,
     db: Session = Depends(get_db),

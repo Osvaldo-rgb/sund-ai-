@@ -8,7 +8,7 @@ from slowapi import _rate_limit_exceeded_handler
 from app.core.config import settings
 from app.database import init_db
 
-# Imports diretos (mais confiável)
+# Importar routers
 from app.routers.auth import router as auth_router
 from app.routers.medical_chat import router as medical_chat_router
 
@@ -21,10 +21,10 @@ app = FastAPI(
     docs_url="/docs",
 )
 
-# CORS forte (resolve o erro que estás a ver)
+# CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],           # Temporariamente aberto
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,7 +34,7 @@ app.add_middleware(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Inicializa banco
+# Inicializa DB
 init_db()
 
 # ====================== ROUTERS ======================
@@ -47,7 +47,8 @@ async def health_check():
         "status": "healthy",
         "application": "SundAI",
         "version": "0.1.0",
-        "environment": settings.ENVIRONMENT
+        "environment": "production",
+        "database": "PostgreSQL"
     }
 
 if __name__ == "__main__":
