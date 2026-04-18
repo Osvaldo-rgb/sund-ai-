@@ -1,0 +1,1229 @@
+2026-04-15 14:44:31 | INFO | sundai | → GET /docs | RequestID: req_1776260671561 | Client: 127.0.0.1
+2026-04-15 14:44:31 | INFO | sundai | ← GET /docs | Status: 200 | Time: 13.10ms | RequestID: req_1776260671561
+2026-04-15 14:44:32 | INFO | sundai | → GET /openapi.json | RequestID: req_1776260672055 | Client: 127.0.0.1
+2026-04-15 14:44:32 | INFO | sundai | ← GET /openapi.json | Status: 200 | Time: 140.57ms | RequestID: req_1776260672055
+2026-04-15 14:46:01 | INFO | sundai | → POST /auth/register | RequestID: req_1776260761877 | Client: 127.0.0.1
+2026-04-15 14:46:02 | INFO | sundai | ← POST /auth/register | Status: 201 | Time: 569.03ms | RequestID: req_1776260761877
+2026-04-15 14:47:27 | INFO | sundai | → POST /auth/login | RequestID: req_1776260847757 | Client: 127.0.0.1
+2026-04-15 14:47:27 | INFO | sundai | ← POST /auth/login | Status: 401 | Time: 43.42ms | RequestID: req_1776260847757
+2026-04-15 14:47:52 | INFO | sundai | → POST /auth/login | RequestID: req_1776260872266 | Client: 127.0.0.1
+2026-04-15 14:47:52 | INFO | sundai | ← POST /auth/login | Status: 200 | Time: 535.27ms | RequestID: req_1776260872266
+2026-04-15 14:48:18 | INFO | sundai | → POST /auth/login | RequestID: req_1776260898781 | Client: 127.0.0.1
+2026-04-15 14:48:19 | INFO | sundai | ← POST /auth/login | Status: 200 | Time: 387.58ms | RequestID: req_1776260898781
+2026-04-15 14:49:19 | INFO | sundai | → POST /unidades-saude/ | RequestID: req_1776260959109 | Client: 127.0.0.1
+2026-04-15 14:49:19 | INFO | sundai | ← POST /unidades-saude/ | Status: 201 | Time: 39.96ms | RequestID: req_1776260959109
+2026-04-15 14:52:05 | INFO | sundai | → POST /medical-chat/ | RequestID: req_1776261125818 | Client: 127.0.0.1
+2026-04-15 14:52:07 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2026-04-15 14:52:07 | INFO | sundai | ← POST /medical-chat/ | Status: 200 | Time: 1942.30ms | RequestID: req_1776261125818
+2026-04-15 15:00:46 | INFO | sundai | → POST /unidades-saude/1/profissionais/osvaldo@sundai.ao | RequestID: req_1776261646200 | Client: 127.0.0.1
+2026-04-15 15:00:46 | INFO | sundai | ← POST /unidades-saude/1/profissionais/osvaldo@sundai.ao | Status: 200 | Time: 127.53ms | RequestID: req_1776261646200
+2026-04-15 15:01:44 | INFO | sundai | → POST /casos-clinicos/ | RequestID: req_1776261704340 | Client: 127.0.0.1
+2026-04-15 15:01:44 | ERROR | sundai | ✘ Erro na requisição /casos-clinicos/ | RequestID: req_1776261704340 | Erro: (sqlite3.IntegrityError) NOT NULL constraint failed: casos_clinicos.unidade_saude_id
+[SQL: INSERT INTO casos_clinicos (titulo, descricao, prioridade, unidade_saude_id, criado_por, paciente_id, diagnostico_sugerido, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('dor de cabeça', 'sinto dor de cabeça intensa desde ontem', 'normal', None, 1, 1, None, '2026-04-15 14:01:44.353788', '2026-04-15 14:01:44.353794')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT NULL constraint failed: casos_clinicos.unidade_saude_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 330, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\routers\casos_clinicos.py", line 49, in criar_caso_clinico
+    db.commit()
+    ~~~~~~~~~^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "<string>", line 2, in commit
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1311, in commit
+    self._prepare_impl()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1286, in _prepare_impl
+    self.session.flush()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4331, in flush
+    self._flush(objects)
+    ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4466, in _flush
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4427, in _flush
+    flush_context.execute()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.mapper,
+        ^^^^^^^^^^^^
+        uow.states_for_mapper_hierarchy(self.mapper, False, False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        uow,
+        ^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        base_mapper,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        insert,
+        ^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+        statement,
+        params,
+        execution_options=execution_options,
+    )
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: casos_clinicos.unidade_saude_id
+[SQL: INSERT INTO casos_clinicos (titulo, descricao, prioridade, unidade_saude_id, criado_por, paciente_id, diagnostico_sugerido, criado_em, atualizado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('dor de cabeça', 'sinto dor de cabeça intensa desde ontem', 'normal', None, 1, 1, None, '2026-04-15 14:01:44.353788', '2026-04-15 14:01:44.353794')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-04-15 15:03:01 | INFO | sundai | → OPTIONS /auth/me | RequestID: req_1776261781159 | Client: 127.0.0.1
+2026-04-15 15:03:01 | INFO | sundai | ← OPTIONS /auth/me | Status: 200 | Time: 2.30ms | RequestID: req_1776261781159
+2026-04-15 15:03:01 | INFO | sundai | → OPTIONS /casos-clinicos | RequestID: req_1776261781164 | Client: 127.0.0.1
+2026-04-15 15:03:01 | INFO | sundai | ← OPTIONS /casos-clinicos | Status: 200 | Time: 5.57ms | RequestID: req_1776261781164
+2026-04-15 15:03:01 | INFO | sundai | → GET /auth/me | RequestID: req_1776261781173 | Client: 127.0.0.1
+2026-04-15 15:03:01 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261781179 | Client: 127.0.0.1
+2026-04-15 15:03:01 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 10.51ms | RequestID: req_1776261781179
+2026-04-15 15:03:01 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 30.87ms | RequestID: req_1776261781173
+2026-04-15 15:03:01 | INFO | sundai | → OPTIONS /casos-clinicos/ | RequestID: req_1776261781214 | Client: 127.0.0.1
+2026-04-15 15:03:01 | INFO | sundai | ← OPTIONS /casos-clinicos/ | Status: 200 | Time: 13.24ms | RequestID: req_1776261781214
+2026-04-15 15:03:01 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261781236 | Client: 127.0.0.1
+2026-04-15 15:03:01 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 10.48ms | RequestID: req_1776261781236
+2026-04-15 15:03:23 | INFO | sundai | → GET /auth/me | RequestID: req_1776261803403 | Client: 127.0.0.1
+2026-04-15 15:03:23 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261803412 | Client: 127.0.0.1
+2026-04-15 15:03:23 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.68ms | RequestID: req_1776261803412
+2026-04-15 15:03:23 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 22.24ms | RequestID: req_1776261803403
+2026-04-15 15:03:23 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261803450 | Client: 127.0.0.1
+2026-04-15 15:03:23 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 8.81ms | RequestID: req_1776261803450
+2026-04-15 15:03:27 | INFO | sundai | → GET /auth/me | RequestID: req_1776261807765 | Client: 127.0.0.1
+2026-04-15 15:03:27 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261807768 | Client: 127.0.0.1
+2026-04-15 15:03:27 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.40ms | RequestID: req_1776261807768
+2026-04-15 15:03:27 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 12.34ms | RequestID: req_1776261807765
+2026-04-15 15:03:27 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261807803 | Client: 127.0.0.1
+2026-04-15 15:03:27 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 12.29ms | RequestID: req_1776261807803
+2026-04-15 15:05:10 | INFO | sundai | → GET /auth/me | RequestID: req_1776261910583 | Client: 127.0.0.1
+2026-04-15 15:05:10 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261910587 | Client: 127.0.0.1
+2026-04-15 15:05:10 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 3.44ms | RequestID: req_1776261910587
+2026-04-15 15:05:10 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 14.23ms | RequestID: req_1776261910583
+2026-04-15 15:05:10 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261910673 | Client: 127.0.0.1
+2026-04-15 15:05:10 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 9.49ms | RequestID: req_1776261910673
+2026-04-15 15:05:16 | INFO | sundai | → GET /auth/me | RequestID: req_1776261916733 | Client: 127.0.0.1
+2026-04-15 15:05:16 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 10.76ms | RequestID: req_1776261916733
+2026-04-15 15:05:16 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261916749 | Client: 127.0.0.1
+2026-04-15 15:05:16 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.32ms | RequestID: req_1776261916749
+2026-04-15 15:05:16 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261916822 | Client: 127.0.0.1
+2026-04-15 15:05:16 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 13.90ms | RequestID: req_1776261916822
+2026-04-15 15:05:35 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261935173 | Client: 127.0.0.1
+2026-04-15 15:05:35 | INFO | sundai | → GET /auth/me | RequestID: req_1776261935174 | Client: 127.0.0.1
+2026-04-15 15:05:35 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 6.25ms | RequestID: req_1776261935173
+2026-04-15 15:05:35 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261935200 | Client: 127.0.0.1
+2026-04-15 15:05:35 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 55.16ms | RequestID: req_1776261935174
+2026-04-15 15:05:35 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 33.66ms | RequestID: req_1776261935200
+2026-04-15 15:05:43 | INFO | sundai | → GET /auth/me | RequestID: req_1776261943553 | Client: 127.0.0.1
+2026-04-15 15:05:43 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261943555 | Client: 127.0.0.1
+2026-04-15 15:05:43 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.80ms | RequestID: req_1776261943555
+2026-04-15 15:05:43 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 8.98ms | RequestID: req_1776261943553
+2026-04-15 15:05:43 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261943598 | Client: 127.0.0.1
+2026-04-15 15:05:43 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.00ms | RequestID: req_1776261943598
+2026-04-15 15:05:48 | INFO | sundai | → GET /auth/me | RequestID: req_1776261948992 | Client: 127.0.0.1
+2026-04-15 15:05:48 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261948995 | Client: 127.0.0.1
+2026-04-15 15:05:48 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.48ms | RequestID: req_1776261948995
+2026-04-15 15:05:49 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 10.67ms | RequestID: req_1776261948992
+2026-04-15 15:05:49 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261949042 | Client: 127.0.0.1
+2026-04-15 15:05:49 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 8.88ms | RequestID: req_1776261949042
+2026-04-15 15:06:25 | INFO | sundai | → GET /auth/me | RequestID: req_1776261985573 | Client: 127.0.0.1
+2026-04-15 15:06:25 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261985574 | Client: 127.0.0.1
+2026-04-15 15:06:25 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261985575 | Client: 127.0.0.1
+2026-04-15 15:06:25 | INFO | sundai | → GET /auth/me | RequestID: req_1776261985576 | Client: 127.0.0.1
+2026-04-15 15:06:25 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 7.87ms | RequestID: req_1776261985574
+2026-04-15 15:06:25 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 8.08ms | RequestID: req_1776261985575
+2026-04-15 15:06:25 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261985604 | Client: 127.0.0.1
+2026-04-15 15:06:25 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 91.58ms | RequestID: req_1776261985576
+2026-04-15 15:06:25 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 64.48ms | RequestID: req_1776261985604
+2026-04-15 15:06:25 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 96.19ms | RequestID: req_1776261985573
+2026-04-15 15:06:26 | INFO | sundai | → GET /auth/me | RequestID: req_1776261986757 | Client: 127.0.0.1
+2026-04-15 15:06:26 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261986766 | Client: 127.0.0.1
+2026-04-15 15:06:26 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.71ms | RequestID: req_1776261986766
+2026-04-15 15:06:26 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 13.19ms | RequestID: req_1776261986757
+2026-04-15 15:06:26 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261986826 | Client: 127.0.0.1
+2026-04-15 15:06:26 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 8.39ms | RequestID: req_1776261986826
+2026-04-15 15:06:32 | INFO | sundai | → GET /auth/me | RequestID: req_1776261992355 | Client: 127.0.0.1
+2026-04-15 15:06:32 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261992357 | Client: 127.0.0.1
+2026-04-15 15:06:32 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.14ms | RequestID: req_1776261992357
+2026-04-15 15:06:32 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 11.04ms | RequestID: req_1776261992355
+2026-04-15 15:06:36 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261996633 | Client: 127.0.0.1
+2026-04-15 15:06:36 | INFO | sundai | → GET /auth/me | RequestID: req_1776261996635 | Client: 127.0.0.1
+2026-04-15 15:06:36 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261996636 | Client: 127.0.0.1
+2026-04-15 15:06:36 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 6.99ms | RequestID: req_1776261996633
+2026-04-15 15:06:36 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261996656 | Client: 127.0.0.1
+2026-04-15 15:06:36 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 38.24ms | RequestID: req_1776261996636
+2026-04-15 15:06:36 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 18.72ms | RequestID: req_1776261996656
+2026-04-15 15:06:36 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 40.73ms | RequestID: req_1776261996635
+2026-04-15 15:06:37 | INFO | sundai | → GET /auth/me | RequestID: req_1776261997576 | Client: 127.0.0.1
+2026-04-15 15:06:37 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776261997578 | Client: 127.0.0.1
+2026-04-15 15:06:37 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.33ms | RequestID: req_1776261997578
+2026-04-15 15:06:37 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 8.92ms | RequestID: req_1776261997576
+2026-04-15 15:06:37 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776261997624 | Client: 127.0.0.1
+2026-04-15 15:06:37 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 5.80ms | RequestID: req_1776261997624
+2026-04-15 15:06:42 | INFO | sundai | → GET /auth/me | RequestID: req_1776262002991 | Client: 127.0.0.1
+2026-04-15 15:06:42 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262002993 | Client: 127.0.0.1
+2026-04-15 15:06:42 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.07ms | RequestID: req_1776262002993
+2026-04-15 15:06:42 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 8.16ms | RequestID: req_1776262002991
+2026-04-15 15:06:43 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262003029 | Client: 127.0.0.1
+2026-04-15 15:06:43 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.47ms | RequestID: req_1776262003029
+2026-04-15 15:06:48 | INFO | sundai | → GET /auth/me | RequestID: req_1776262008164 | Client: 127.0.0.1
+2026-04-15 15:06:48 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262008167 | Client: 127.0.0.1
+2026-04-15 15:06:48 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.01ms | RequestID: req_1776262008167
+2026-04-15 15:06:48 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 9.67ms | RequestID: req_1776262008164
+2026-04-15 15:06:48 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262008203 | Client: 127.0.0.1
+2026-04-15 15:06:48 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 6.01ms | RequestID: req_1776262008203
+2026-04-15 15:07:05 | INFO | sundai | → GET /auth/me | RequestID: req_1776262025896 | Client: 127.0.0.1
+2026-04-15 15:07:05 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 7.63ms | RequestID: req_1776262025896
+2026-04-15 15:07:05 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262025913 | Client: 127.0.0.1
+2026-04-15 15:07:05 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.25ms | RequestID: req_1776262025913
+2026-04-15 15:07:06 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262026025 | Client: 127.0.0.1
+2026-04-15 15:07:06 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 5.95ms | RequestID: req_1776262026025
+2026-04-15 15:07:11 | INFO | sundai | → GET /auth/me | RequestID: req_1776262031632 | Client: 127.0.0.1
+2026-04-15 15:07:11 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262031635 | Client: 127.0.0.1
+2026-04-15 15:07:11 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.35ms | RequestID: req_1776262031635
+2026-04-15 15:07:11 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 12.73ms | RequestID: req_1776262031632
+2026-04-15 15:07:11 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262031686 | Client: 127.0.0.1
+2026-04-15 15:07:11 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.47ms | RequestID: req_1776262031686
+2026-04-15 15:07:17 | INFO | sundai | → GET /auth/me | RequestID: req_1776262037582 | Client: 127.0.0.1
+2026-04-15 15:07:17 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262037587 | Client: 127.0.0.1
+2026-04-15 15:07:17 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.60ms | RequestID: req_1776262037587
+2026-04-15 15:07:17 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 12.08ms | RequestID: req_1776262037582
+2026-04-15 15:07:17 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262037643 | Client: 127.0.0.1
+2026-04-15 15:07:17 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.19ms | RequestID: req_1776262037643
+2026-04-15 15:07:22 | INFO | sundai | → GET /auth/me | RequestID: req_1776262042881 | Client: 127.0.0.1
+2026-04-15 15:07:22 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262042885 | Client: 127.0.0.1
+2026-04-15 15:07:22 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.08ms | RequestID: req_1776262042885
+2026-04-15 15:07:22 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 14.04ms | RequestID: req_1776262042881
+2026-04-15 15:07:22 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262042941 | Client: 127.0.0.1
+2026-04-15 15:07:22 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 10.56ms | RequestID: req_1776262042941
+2026-04-15 15:07:31 | INFO | sundai | → GET /auth/me | RequestID: req_1776262051226 | Client: 127.0.0.1
+2026-04-15 15:07:31 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262051227 | Client: 127.0.0.1
+2026-04-15 15:07:31 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 6.59ms | RequestID: req_1776262051227
+2026-04-15 15:07:31 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262051238 | Client: 127.0.0.1
+2026-04-15 15:07:31 | ERROR | sundai | ✘ Erro na requisição /auth/me | RequestID: req_1776262051226 | Erro: name 'email' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\dependencies\utils.py", line 680, in solve_dependencies
+    solved = await run_in_threadpool(call, **solved_result.values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\core\deps.py", line 20, in get_current_user
+    "email": email,
+             ^^^^^
+NameError: name 'email' is not defined. Did you mean: 'eval'? Or did you forget to import 'email'?
+2026-04-15 15:07:31 | ERROR | sundai | ✘ Erro na requisição /casos-clinicos/ | RequestID: req_1776262051238 | Erro: name 'email' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\dependencies\utils.py", line 680, in solve_dependencies
+    solved = await run_in_threadpool(call, **solved_result.values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\core\deps.py", line 20, in get_current_user
+    "email": email,
+             ^^^^^
+NameError: name 'email' is not defined. Did you mean: 'eval'? Or did you forget to import 'email'?
+2026-04-15 15:07:51 | INFO | sundai | → GET /auth/me | RequestID: req_1776262071194 | Client: 127.0.0.1
+2026-04-15 15:07:51 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262071196 | Client: 127.0.0.1
+2026-04-15 15:07:51 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.38ms | RequestID: req_1776262071196
+2026-04-15 15:07:51 | ERROR | sundai | ✘ Erro na requisição /auth/me | RequestID: req_1776262071194 | Erro: name 'email' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\dependencies\utils.py", line 680, in solve_dependencies
+    solved = await run_in_threadpool(call, **solved_result.values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\core\deps.py", line 20, in get_current_user
+    "email": email,
+             ^^^^^
+NameError: name 'email' is not defined. Did you mean: 'eval'? Or did you forget to import 'email'?
+2026-04-15 15:07:51 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262071234 | Client: 127.0.0.1
+2026-04-15 15:07:51 | ERROR | sundai | ✘ Erro na requisição /casos-clinicos/ | RequestID: req_1776262071234 | Erro: name 'email' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\dependencies\utils.py", line 680, in solve_dependencies
+    solved = await run_in_threadpool(call, **solved_result.values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\core\deps.py", line 20, in get_current_user
+    "email": email,
+             ^^^^^
+NameError: name 'email' is not defined. Did you mean: 'eval'? Or did you forget to import 'email'?
+2026-04-15 15:07:56 | INFO | sundai | → GET /auth/me | RequestID: req_1776262076400 | Client: 127.0.0.1
+2026-04-15 15:07:56 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262076401 | Client: 127.0.0.1
+2026-04-15 15:07:56 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 4.75ms | RequestID: req_1776262076401
+2026-04-15 15:07:56 | ERROR | sundai | ✘ Erro na requisição /auth/me | RequestID: req_1776262076400 | Erro: name 'email' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\dependencies\utils.py", line 680, in solve_dependencies
+    solved = await run_in_threadpool(call, **solved_result.values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\core\deps.py", line 20, in get_current_user
+    "email": email,
+             ^^^^^
+NameError: name 'email' is not defined. Did you mean: 'eval'? Or did you forget to import 'email'?
+2026-04-15 15:07:56 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262076442 | Client: 127.0.0.1
+2026-04-15 15:07:56 | ERROR | sundai | ✘ Erro na requisição /casos-clinicos/ | RequestID: req_1776262076442 | Erro: name 'email' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\dependencies\utils.py", line 680, in solve_dependencies
+    solved = await run_in_threadpool(call, **solved_result.values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\core\deps.py", line 20, in get_current_user
+    "email": email,
+             ^^^^^
+NameError: name 'email' is not defined. Did you mean: 'eval'? Or did you forget to import 'email'?
+2026-04-15 15:08:45 | INFO | sundai | → GET /auth/me | RequestID: req_1776262125094 | Client: 127.0.0.1
+2026-04-15 15:08:45 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262125097 | Client: 127.0.0.1
+2026-04-15 15:08:45 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.54ms | RequestID: req_1776262125097
+2026-04-15 15:08:45 | ERROR | sundai | ✘ Erro na requisição /auth/me | RequestID: req_1776262125094 | Erro: name 'email' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\dependencies\utils.py", line 680, in solve_dependencies
+    solved = await run_in_threadpool(call, **solved_result.values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\core\deps.py", line 20, in get_current_user
+    "email": email,
+             ^^^^^
+NameError: name 'email' is not defined. Did you mean: 'eval'? Or did you forget to import 'email'?
+2026-04-15 15:08:45 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262125143 | Client: 127.0.0.1
+2026-04-15 15:08:45 | ERROR | sundai | ✘ Erro na requisição /casos-clinicos/ | RequestID: req_1776262125143 | Erro: name 'email' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\main.py", line 73, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\fastapi\dependencies\utils.py", line 680, in solve_dependencies
+    solved = await run_in_threadpool(call, **solved_result.values)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2518, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1002, in run
+    result = context.run(func, *args)
+  File "C:\Users\Nelsani\Documents\Ataque 2028\Project\SundAI\app\core\deps.py", line 20, in get_current_user
+    "email": email,
+             ^^^^^
+NameError: name 'email' is not defined. Did you mean: 'eval'? Or did you forget to import 'email'?
+2026-04-15 15:08:54 | INFO | sundai | → GET /auth/me | RequestID: req_1776262134780 | Client: 127.0.0.1
+2026-04-15 15:08:54 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262134781 | Client: 127.0.0.1
+2026-04-15 15:08:54 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 3.73ms | RequestID: req_1776262134781
+2026-04-15 15:08:54 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262134796 | Client: 127.0.0.1
+2026-04-15 15:08:54 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 66.01ms | RequestID: req_1776262134796
+2026-04-15 15:08:54 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 82.66ms | RequestID: req_1776262134780
+2026-04-15 15:08:56 | INFO | sundai | → GET /auth/me | RequestID: req_1776262136380 | Client: 127.0.0.1
+2026-04-15 15:08:56 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262136382 | Client: 127.0.0.1
+2026-04-15 15:08:56 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.32ms | RequestID: req_1776262136382
+2026-04-15 15:08:56 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 11.08ms | RequestID: req_1776262136380
+2026-04-15 15:08:56 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262136451 | Client: 127.0.0.1
+2026-04-15 15:08:56 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 10.82ms | RequestID: req_1776262136451
+2026-04-15 15:09:01 | INFO | sundai | → GET /auth/me | RequestID: req_1776262141597 | Client: 127.0.0.1
+2026-04-15 15:09:01 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262141599 | Client: 127.0.0.1
+2026-04-15 15:09:01 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.81ms | RequestID: req_1776262141599
+2026-04-15 15:09:01 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 9.78ms | RequestID: req_1776262141597
+2026-04-15 15:09:01 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262141637 | Client: 127.0.0.1
+2026-04-15 15:09:01 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 5.93ms | RequestID: req_1776262141637
+2026-04-15 15:09:39 | INFO | sundai | → GET /auth/me | RequestID: req_1776262179696 | Client: 127.0.0.1
+2026-04-15 15:09:39 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262179698 | Client: 127.0.0.1
+2026-04-15 15:09:39 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.93ms | RequestID: req_1776262179698
+2026-04-15 15:09:39 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 11.10ms | RequestID: req_1776262179696
+2026-04-15 15:09:39 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262179736 | Client: 127.0.0.1
+2026-04-15 15:09:39 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 5.60ms | RequestID: req_1776262179736
+2026-04-15 15:09:47 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262187811 | Client: 127.0.0.1
+2026-04-15 15:09:47 | INFO | sundai | → GET /auth/me | RequestID: req_1776262187812 | Client: 127.0.0.1
+2026-04-15 15:09:47 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 3.76ms | RequestID: req_1776262187811
+2026-04-15 15:09:47 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262187830 | Client: 127.0.0.1
+2026-04-15 15:09:47 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 37.99ms | RequestID: req_1776262187812
+2026-04-15 15:09:47 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 20.55ms | RequestID: req_1776262187830
+2026-04-15 15:09:50 | INFO | sundai | → GET /auth/me | RequestID: req_1776262190299 | Client: 127.0.0.1
+2026-04-15 15:09:50 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262190300 | Client: 127.0.0.1
+2026-04-15 15:09:50 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.53ms | RequestID: req_1776262190300
+2026-04-15 15:09:50 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 11.46ms | RequestID: req_1776262190299
+2026-04-15 15:09:50 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262190347 | Client: 127.0.0.1
+2026-04-15 15:09:50 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 8.37ms | RequestID: req_1776262190347
+2026-04-15 15:10:34 | INFO | sundai | → POST /auth/login | RequestID: req_1776262234873 | Client: 127.0.0.1
+2026-04-15 15:10:35 | INFO | sundai | ← POST /auth/login | Status: 200 | Time: 441.63ms | RequestID: req_1776262234873
+2026-04-15 15:11:00 | INFO | sundai | → POST /auth/logout | RequestID: req_1776262260281 | Client: 127.0.0.1
+2026-04-15 15:11:00 | INFO | sundai | ← POST /auth/logout | Status: 200 | Time: 41.28ms | RequestID: req_1776262260281
+2026-04-15 15:11:00 | INFO | sundai | → GET /auth/me | RequestID: req_1776262260972 | Client: 127.0.0.1
+2026-04-15 15:11:00 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262260978 | Client: 127.0.0.1
+2026-04-15 15:11:00 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.90ms | RequestID: req_1776262260978
+2026-04-15 15:11:00 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 13.94ms | RequestID: req_1776262260972
+2026-04-15 15:11:01 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262261040 | Client: 127.0.0.1
+2026-04-15 15:11:01 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 10.81ms | RequestID: req_1776262261040
+2026-04-15 15:11:23 | INFO | sundai | → POST /auth/login | RequestID: req_1776262283526 | Client: 127.0.0.1
+2026-04-15 15:11:23 | INFO | sundai | ← POST /auth/login | Status: 200 | Time: 448.28ms | RequestID: req_1776262283526
+2026-04-15 15:11:44 | INFO | sundai | → GET /auth/me | RequestID: req_1776262304417 | Client: 127.0.0.1
+2026-04-15 15:11:44 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262304419 | Client: 127.0.0.1
+2026-04-15 15:11:44 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.08ms | RequestID: req_1776262304419
+2026-04-15 15:11:44 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 12.16ms | RequestID: req_1776262304417
+2026-04-15 15:11:44 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262304470 | Client: 127.0.0.1
+2026-04-15 15:11:44 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 9.58ms | RequestID: req_1776262304470
+2026-04-15 15:13:14 | INFO | sundai | → POST /casos-clinicos/ | RequestID: req_1776262394519 | Client: 127.0.0.1
+2026-04-15 15:13:14 | INFO | sundai | ← POST /casos-clinicos/ | Status: 401 | Time: 34.81ms | RequestID: req_1776262394519
+2026-04-15 15:13:32 | INFO | sundai | → POST /auth/login | RequestID: req_1776262412903 | Client: 127.0.0.1
+2026-04-15 15:13:33 | INFO | sundai | ← POST /auth/login | Status: 200 | Time: 389.33ms | RequestID: req_1776262412903
+2026-04-15 15:13:44 | INFO | sundai | → POST /casos-clinicos/ | RequestID: req_1776262424820 | Client: 127.0.0.1
+2026-04-15 15:13:44 | INFO | sundai | ← POST /casos-clinicos/ | Status: 201 | Time: 26.95ms | RequestID: req_1776262424820
+2026-04-15 15:13:45 | INFO | sundai | → OPTIONS /auth/me | RequestID: req_1776262425492 | Client: 127.0.0.1
+2026-04-15 15:13:45 | INFO | sundai | ← OPTIONS /auth/me | Status: 200 | Time: 1.68ms | RequestID: req_1776262425492
+2026-04-15 15:13:45 | INFO | sundai | → OPTIONS /casos-clinicos | RequestID: req_1776262425496 | Client: 127.0.0.1
+2026-04-15 15:13:45 | INFO | sundai | ← OPTIONS /casos-clinicos | Status: 200 | Time: 1.11ms | RequestID: req_1776262425496
+2026-04-15 15:13:45 | INFO | sundai | → GET /auth/me | RequestID: req_1776262425499 | Client: 127.0.0.1
+2026-04-15 15:13:45 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262425501 | Client: 127.0.0.1
+2026-04-15 15:13:45 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.50ms | RequestID: req_1776262425501
+2026-04-15 15:13:45 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 10.20ms | RequestID: req_1776262425499
+2026-04-15 15:13:45 | INFO | sundai | → OPTIONS /casos-clinicos/ | RequestID: req_1776262425536 | Client: 127.0.0.1
+2026-04-15 15:13:45 | INFO | sundai | ← OPTIONS /casos-clinicos/ | Status: 200 | Time: 0.90ms | RequestID: req_1776262425536
+2026-04-15 15:13:45 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262425539 | Client: 127.0.0.1
+2026-04-15 15:13:45 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.43ms | RequestID: req_1776262425539
+2026-04-15 15:14:22 | INFO | sundai | → OPTIONS /medical-chat | RequestID: req_1776262462596 | Client: 127.0.0.1
+2026-04-15 15:14:22 | INFO | sundai | ← OPTIONS /medical-chat | Status: 200 | Time: 0.80ms | RequestID: req_1776262462596
+2026-04-15 15:14:22 | INFO | sundai | → POST /medical-chat | RequestID: req_1776262462600 | Client: 127.0.0.1
+2026-04-15 15:14:22 | INFO | sundai | ← POST /medical-chat | Status: 307 | Time: 1.74ms | RequestID: req_1776262462600
+2026-04-15 15:14:22 | INFO | sundai | → OPTIONS /medical-chat/ | RequestID: req_1776262462632 | Client: 127.0.0.1
+2026-04-15 15:14:22 | INFO | sundai | ← OPTIONS /medical-chat/ | Status: 200 | Time: 0.89ms | RequestID: req_1776262462632
+2026-04-15 15:14:22 | INFO | sundai | → POST /medical-chat/ | RequestID: req_1776262462636 | Client: 127.0.0.1
+2026-04-15 15:14:22 | INFO | sundai | ← POST /medical-chat/ | Status: 401 | Time: 7.51ms | RequestID: req_1776262462636
+2026-04-15 15:14:30 | INFO | sundai | → GET /auth/me | RequestID: req_1776262470634 | Client: 127.0.0.1
+2026-04-15 15:14:30 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262470640 | Client: 127.0.0.1
+2026-04-15 15:14:30 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.34ms | RequestID: req_1776262470640
+2026-04-15 15:14:30 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 14.13ms | RequestID: req_1776262470634
+2026-04-15 15:14:30 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262470673 | Client: 127.0.0.1
+2026-04-15 15:14:30 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 4.76ms | RequestID: req_1776262470673
+2026-04-15 15:14:46 | INFO | sundai | → GET /auth/me | RequestID: req_1776262486051 | Client: 127.0.0.1
+2026-04-15 15:14:46 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262486053 | Client: 127.0.0.1
+2026-04-15 15:14:46 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.50ms | RequestID: req_1776262486053
+2026-04-15 15:14:46 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 11.24ms | RequestID: req_1776262486051
+2026-04-15 15:14:46 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262486088 | Client: 127.0.0.1
+2026-04-15 15:14:46 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 5.52ms | RequestID: req_1776262486088
+2026-04-15 15:14:51 | INFO | sundai | → GET /auth/me | RequestID: req_1776262491077 | Client: 127.0.0.1
+2026-04-15 15:14:51 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262491080 | Client: 127.0.0.1
+2026-04-15 15:14:51 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.09ms | RequestID: req_1776262491080
+2026-04-15 15:14:51 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 8.29ms | RequestID: req_1776262491077
+2026-04-15 15:14:51 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262491126 | Client: 127.0.0.1
+2026-04-15 15:14:51 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.47ms | RequestID: req_1776262491126
+2026-04-15 15:14:56 | INFO | sundai | → GET /auth/me | RequestID: req_1776262496760 | Client: 127.0.0.1
+2026-04-15 15:14:56 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262496766 | Client: 127.0.0.1
+2026-04-15 15:14:56 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.71ms | RequestID: req_1776262496766
+2026-04-15 15:14:56 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 15.16ms | RequestID: req_1776262496760
+2026-04-15 15:14:56 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262496823 | Client: 127.0.0.1
+2026-04-15 15:14:56 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 11.72ms | RequestID: req_1776262496823
+2026-04-15 15:15:02 | INFO | sundai | → GET /auth/me | RequestID: req_1776262502121 | Client: 127.0.0.1
+2026-04-15 15:15:02 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262502123 | Client: 127.0.0.1
+2026-04-15 15:15:02 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.09ms | RequestID: req_1776262502123
+2026-04-15 15:15:02 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 8.01ms | RequestID: req_1776262502121
+2026-04-15 15:15:02 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262502162 | Client: 127.0.0.1
+2026-04-15 15:15:02 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 8.32ms | RequestID: req_1776262502162
+2026-04-15 15:15:11 | INFO | sundai | → GET /auth/me | RequestID: req_1776262511912 | Client: 127.0.0.1
+2026-04-15 15:15:11 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262511916 | Client: 127.0.0.1
+2026-04-15 15:15:11 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 3.26ms | RequestID: req_1776262511916
+2026-04-15 15:15:11 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 9.64ms | RequestID: req_1776262511912
+2026-04-15 15:15:11 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262511952 | Client: 127.0.0.1
+2026-04-15 15:15:11 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 6.75ms | RequestID: req_1776262511952
+2026-04-15 15:15:17 | INFO | sundai | → GET /auth/me | RequestID: req_1776262517207 | Client: 127.0.0.1
+2026-04-15 15:15:17 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262517210 | Client: 127.0.0.1
+2026-04-15 15:15:17 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.09ms | RequestID: req_1776262517210
+2026-04-15 15:15:17 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 7.72ms | RequestID: req_1776262517207
+2026-04-15 15:15:17 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262517249 | Client: 127.0.0.1
+2026-04-15 15:15:17 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 9.49ms | RequestID: req_1776262517249
+2026-04-15 15:16:07 | INFO | sundai | → GET /auth/me | RequestID: req_1776262567692 | Client: 127.0.0.1
+2026-04-15 15:16:07 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262567694 | Client: 127.0.0.1
+2026-04-15 15:16:07 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.35ms | RequestID: req_1776262567694
+2026-04-15 15:16:07 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 10.78ms | RequestID: req_1776262567692
+2026-04-15 15:16:07 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262567748 | Client: 127.0.0.1
+2026-04-15 15:16:07 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 9.45ms | RequestID: req_1776262567748
+2026-04-15 15:16:11 | INFO | sundai | → GET /auth/me | RequestID: req_1776262571280 | Client: 127.0.0.1
+2026-04-15 15:16:11 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 9.74ms | RequestID: req_1776262571280
+2026-04-15 15:16:11 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262571327 | Client: 127.0.0.1
+2026-04-15 15:16:11 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.15ms | RequestID: req_1776262571327
+2026-04-15 15:16:11 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262571373 | Client: 127.0.0.1
+2026-04-15 15:16:11 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 3.65ms | RequestID: req_1776262571373
+2026-04-15 15:16:12 | INFO | sundai | → GET /auth/me | RequestID: req_1776262572960 | Client: 127.0.0.1
+2026-04-15 15:16:12 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 6.71ms | RequestID: req_1776262572960
+2026-04-15 15:16:13 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262573048 | Client: 127.0.0.1
+2026-04-15 15:16:13 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.19ms | RequestID: req_1776262573048
+2026-04-15 15:16:13 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262573111 | Client: 127.0.0.1
+2026-04-15 15:16:13 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 11.17ms | RequestID: req_1776262573111
+2026-04-15 15:16:18 | INFO | sundai | → GET /auth/me | RequestID: req_1776262578288 | Client: 127.0.0.1
+2026-04-15 15:16:18 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 5.46ms | RequestID: req_1776262578288
+2026-04-15 15:16:18 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262578353 | Client: 127.0.0.1
+2026-04-15 15:16:18 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.62ms | RequestID: req_1776262578353
+2026-04-15 15:16:18 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262578419 | Client: 127.0.0.1
+2026-04-15 15:16:18 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 6.69ms | RequestID: req_1776262578419
+2026-04-15 15:16:23 | INFO | sundai | → GET /auth/me | RequestID: req_1776262583513 | Client: 127.0.0.1
+2026-04-15 15:16:23 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 4.80ms | RequestID: req_1776262583513
+2026-04-15 15:16:23 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262583550 | Client: 127.0.0.1
+2026-04-15 15:16:23 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.26ms | RequestID: req_1776262583550
+2026-04-15 15:16:23 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262583588 | Client: 127.0.0.1
+2026-04-15 15:16:23 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 6.29ms | RequestID: req_1776262583588
+2026-04-15 15:16:28 | INFO | sundai | → GET /auth/me | RequestID: req_1776262588605 | Client: 127.0.0.1
+2026-04-15 15:16:28 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 9.69ms | RequestID: req_1776262588605
+2026-04-15 15:16:28 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262588639 | Client: 127.0.0.1
+2026-04-15 15:16:28 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 6.76ms | RequestID: req_1776262588639
+2026-04-15 15:16:28 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262588674 | Client: 127.0.0.1
+2026-04-15 15:16:28 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 12.81ms | RequestID: req_1776262588674
+2026-04-15 15:16:38 | INFO | sundai | → GET /auth/me | RequestID: req_1776262598966 | Client: 127.0.0.1
+2026-04-15 15:16:38 | INFO | sundai | ← GET /auth/me | Status: 401 | Time: 6.14ms | RequestID: req_1776262598966
+2026-04-15 15:16:39 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262599017 | Client: 127.0.0.1
+2026-04-15 15:16:39 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.23ms | RequestID: req_1776262599017
+2026-04-15 15:16:39 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262599060 | Client: 127.0.0.1
+2026-04-15 15:16:39 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 6.65ms | RequestID: req_1776262599060
+2026-04-15 15:17:38 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262658817 | Client: 127.0.0.1
+2026-04-15 15:17:38 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.02ms | RequestID: req_1776262658817
+2026-04-15 15:17:38 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262658855 | Client: 127.0.0.1
+2026-04-15 15:17:38 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.07ms | RequestID: req_1776262658855
+2026-04-15 15:17:40 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262660123 | Client: 127.0.0.1
+2026-04-15 15:17:40 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.03ms | RequestID: req_1776262660123
+2026-04-15 15:17:40 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262660169 | Client: 127.0.0.1
+2026-04-15 15:17:40 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 5.19ms | RequestID: req_1776262660169
+2026-04-15 15:17:45 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262665307 | Client: 127.0.0.1
+2026-04-15 15:17:45 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 0.97ms | RequestID: req_1776262665307
+2026-04-15 15:17:45 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262665340 | Client: 127.0.0.1
+2026-04-15 15:17:45 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 8.24ms | RequestID: req_1776262665340
+2026-04-15 15:17:50 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262670582 | Client: 127.0.0.1
+2026-04-15 15:17:50 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.03ms | RequestID: req_1776262670582
+2026-04-15 15:17:50 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262670611 | Client: 127.0.0.1
+2026-04-15 15:17:50 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.15ms | RequestID: req_1776262670611
+2026-04-15 15:17:56 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262676024 | Client: 127.0.0.1
+2026-04-15 15:17:56 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.39ms | RequestID: req_1776262676024
+2026-04-15 15:17:56 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262676097 | Client: 127.0.0.1
+2026-04-15 15:17:56 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.47ms | RequestID: req_1776262676097
+2026-04-15 15:17:58 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262678764 | Client: 127.0.0.1
+2026-04-15 15:17:58 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.59ms | RequestID: req_1776262678764
+2026-04-15 15:17:58 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262678801 | Client: 127.0.0.1
+2026-04-15 15:17:58 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.12ms | RequestID: req_1776262678801
+2026-04-15 15:18:01 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262681157 | Client: 127.0.0.1
+2026-04-15 15:18:01 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.16ms | RequestID: req_1776262681157
+2026-04-15 15:18:01 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262681191 | Client: 127.0.0.1
+2026-04-15 15:18:01 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 4.58ms | RequestID: req_1776262681191
+2026-04-15 15:18:06 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262686399 | Client: 127.0.0.1
+2026-04-15 15:18:06 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.04ms | RequestID: req_1776262686399
+2026-04-15 15:18:06 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262686443 | Client: 127.0.0.1
+2026-04-15 15:18:06 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 3.63ms | RequestID: req_1776262686443
+2026-04-15 15:18:11 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262691732 | Client: 127.0.0.1
+2026-04-15 15:18:11 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.43ms | RequestID: req_1776262691732
+2026-04-15 15:18:11 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262691775 | Client: 127.0.0.1
+2026-04-15 15:18:11 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 6.56ms | RequestID: req_1776262691775
+2026-04-15 15:18:16 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262696945 | Client: 127.0.0.1
+2026-04-15 15:18:16 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.12ms | RequestID: req_1776262696945
+2026-04-15 15:18:16 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262696976 | Client: 127.0.0.1
+2026-04-15 15:18:16 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 4.67ms | RequestID: req_1776262696976
+2026-04-15 15:18:26 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262706026 | Client: 127.0.0.1
+2026-04-15 15:18:26 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 2.69ms | RequestID: req_1776262706026
+2026-04-15 15:18:26 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262706066 | Client: 127.0.0.1
+2026-04-15 15:18:26 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 4.19ms | RequestID: req_1776262706066
+2026-04-15 15:18:32 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262712372 | Client: 127.0.0.1
+2026-04-15 15:18:32 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 0.98ms | RequestID: req_1776262712372
+2026-04-15 15:18:32 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262712405 | Client: 127.0.0.1
+2026-04-15 15:18:32 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 5.43ms | RequestID: req_1776262712405
+2026-04-15 15:18:37 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262717637 | Client: 127.0.0.1
+2026-04-15 15:18:37 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.07ms | RequestID: req_1776262717637
+2026-04-15 15:18:37 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262717671 | Client: 127.0.0.1
+2026-04-15 15:18:37 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 4.04ms | RequestID: req_1776262717671
+2026-04-15 15:18:45 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262725410 | Client: 127.0.0.1
+2026-04-15 15:18:45 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 4.14ms | RequestID: req_1776262725410
+2026-04-15 15:18:45 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262725460 | Client: 127.0.0.1
+2026-04-15 15:18:45 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 18.42ms | RequestID: req_1776262725460
+2026-04-15 15:18:54 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262734897 | Client: 127.0.0.1
+2026-04-15 15:18:54 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 1.52ms | RequestID: req_1776262734897
+2026-04-15 15:18:54 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262734936 | Client: 127.0.0.1
+2026-04-15 15:18:54 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 7.81ms | RequestID: req_1776262734936
+2026-04-15 15:21:22 | INFO | sundai | → GET /casos-clinicos | RequestID: req_1776262882520 | Client: 127.0.0.1
+2026-04-15 15:21:22 | INFO | sundai | ← GET /casos-clinicos | Status: 307 | Time: 3.02ms | RequestID: req_1776262882520
+2026-04-15 15:21:22 | INFO | sundai | → GET /casos-clinicos/ | RequestID: req_1776262882641 | Client: 127.0.0.1
+2026-04-15 15:21:22 | INFO | sundai | ← GET /casos-clinicos/ | Status: 401 | Time: 11.99ms | RequestID: req_1776262882641
+2026-04-15 15:21:55 | INFO | sundai | → POST /auth/login | RequestID: req_1776262915499 | Client: 127.0.0.1
+2026-04-15 15:21:55 | INFO | sundai | ← POST /auth/login | Status: 200 | Time: 483.08ms | RequestID: req_1776262915499
+2026-04-15 15:21:55 | INFO | sundai | → GET /auth/me | RequestID: req_1776262915990 | Client: 127.0.0.1
+2026-04-15 15:21:56 | INFO | sundai | ← GET /auth/me | Status: 200 | Time: 10.68ms | RequestID: req_1776262915990
+2026-04-15 15:21:56 | INFO | sundai | → GET /auth/me | RequestID: req_1776262916112 | Client: 127.0.0.1
+2026-04-15 15:21:56 | INFO | sundai | ← GET /auth/me | Status: 200 | Time: 16.77ms | RequestID: req_1776262916112
+2026-04-15 15:23:09 | INFO | sundai | → POST /medical-chat | RequestID: req_1776262989072 | Client: 127.0.0.1
+2026-04-15 15:23:09 | INFO | sundai | ← POST /medical-chat | Status: 307 | Time: 1.82ms | RequestID: req_1776262989072
+2026-04-15 15:23:09 | INFO | sundai | → POST /medical-chat/ | RequestID: req_1776262989104 | Client: 127.0.0.1
+2026-04-15 15:23:11 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2026-04-15 15:23:11 | INFO | sundai | ← POST /medical-chat/ | Status: 200 | Time: 2572.85ms | RequestID: req_1776262989104
+2026-04-15 15:26:05 | INFO | sundai | → POST /auth/login | RequestID: req_1776263165563 | Client: 127.0.0.1
+2026-04-15 15:26:06 | INFO | sundai | ← POST /auth/login | Status: 200 | Time: 849.47ms | RequestID: req_1776263165563
+2026-04-15 15:26:06 | INFO | sundai | → OPTIONS /auth/me | RequestID: req_1776263166424 | Client: 127.0.0.1
+2026-04-15 15:26:06 | INFO | sundai | ← OPTIONS /auth/me | Status: 200 | Time: 1.93ms | RequestID: req_1776263166424
+2026-04-15 15:26:06 | INFO | sundai | → GET /auth/me | RequestID: req_1776263166431 | Client: 127.0.0.1
+2026-04-15 15:26:06 | INFO | sundai | ← GET /auth/me | Status: 200 | Time: 18.05ms | RequestID: req_1776263166431
+2026-04-15 15:26:06 | INFO | sundai | → GET /auth/me | RequestID: req_1776263166463 | Client: 127.0.0.1
+2026-04-15 15:26:06 | INFO | sundai | ← GET /auth/me | Status: 200 | Time: 7.38ms | RequestID: req_1776263166463
+2026-04-15 15:26:27 | INFO | sundai | → OPTIONS /medical-chat | RequestID: req_1776263187274 | Client: 127.0.0.1
+2026-04-15 15:26:27 | INFO | sundai | ← OPTIONS /medical-chat | Status: 200 | Time: 1.11ms | RequestID: req_1776263187274
+2026-04-15 15:26:27 | INFO | sundai | → POST /medical-chat | RequestID: req_1776263187278 | Client: 127.0.0.1
+2026-04-15 15:26:27 | INFO | sundai | ← POST /medical-chat | Status: 307 | Time: 1.51ms | RequestID: req_1776263187278
+2026-04-15 15:26:27 | INFO | sundai | → OPTIONS /medical-chat/ | RequestID: req_1776263187316 | Client: 127.0.0.1
+2026-04-15 15:26:27 | INFO | sundai | ← OPTIONS /medical-chat/ | Status: 200 | Time: 10.45ms | RequestID: req_1776263187316
+2026-04-15 15:26:27 | INFO | sundai | → POST /medical-chat/ | RequestID: req_1776263187329 | Client: 127.0.0.1
+2026-04-15 15:26:29 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-15 15:26:29 | INFO | sundai | ← POST /medical-chat/ | Status: 200 | Time: 2264.16ms | RequestID: req_1776263187329
+2026-04-15 15:34:00 | INFO | sundai | → GET /auth/me | RequestID: req_1776263640736 | Client: 127.0.0.1
+2026-04-15 15:34:01 | INFO | sundai | ← GET /auth/me | Status: 200 | Time: 430.39ms | RequestID: req_1776263640736
+2026-04-16 13:59:25 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 13:59:25 | INFO | sundai | Ambiente: DEVELOPMENT
+2026-04-16 13:59:25 | INFO | sundai | Database: SQLite
+2026-04-16 13:59:38 | INFO | sundai | → GET /docs | ID: req_1776344378781
+2026-04-16 13:59:38 | INFO | sundai | ← GET /docs | 200 | 5.79ms | ID: req_1776344378781
+2026-04-16 13:59:40 | INFO | sundai | → GET /openapi.json | ID: req_1776344380173
+2026-04-16 13:59:40 | INFO | sundai | ← GET /openapi.json | 200 | 121.44ms | ID: req_1776344380173
+2026-04-16 14:01:07 | INFO | sundai | → POST /auth/register | ID: req_1776344467029
+2026-04-16 14:01:07 | INFO | sundai | ← POST /auth/register | 201 | 569.54ms | ID: req_1776344467029
+2026-04-16 14:20:53 | INFO | sundai | → GET /docs | ID: req_1776345653820
+2026-04-16 14:20:53 | INFO | sundai | ← GET /docs | 200 | 107.94ms | ID: req_1776345653820
+2026-04-16 14:20:54 | INFO | sundai | → GET /openapi.json | ID: req_1776345654496
+2026-04-16 14:20:54 | INFO | sundai | ← GET /openapi.json | 200 | 27.59ms | ID: req_1776345654496
+2026-04-16 14:21:10 | INFO | sundai | → POST /auth/login | ID: req_1776345670871
+2026-04-16 14:21:11 | INFO | sundai | ← POST /auth/login | 200 | 958.44ms | ID: req_1776345670871
+2026-04-16 14:22:26 | INFO | sundai | → POST /auth/register | ID: req_1776345746180
+2026-04-16 14:22:26 | INFO | sundai | ← POST /auth/register | 422 | 35.17ms | ID: req_1776345746180
+2026-04-16 15:18:12 | INFO | sundai | → OPTIONS /auth/me | ID: req_1776349092615
+2026-04-16 15:18:12 | INFO | sundai | ← OPTIONS /auth/me | 200 | 111.17ms | ID: req_1776349092615
+2026-04-16 15:18:12 | INFO | sundai | → GET /auth/me | ID: req_1776349092766
+2026-04-16 15:18:13 | INFO | sundai | ← GET /auth/me | 401 | 863.72ms | ID: req_1776349092766
+2026-04-16 15:19:00 | INFO | sundai | → GET /auth/me | ID: req_1776349140506
+2026-04-16 15:19:00 | INFO | sundai | ← GET /auth/me | 401 | 63.39ms | ID: req_1776349140506
+2026-04-16 15:19:20 | INFO | sundai | → GET /auth/me | ID: req_1776349160260
+2026-04-16 15:19:20 | INFO | sundai | ← GET /auth/me | 401 | 8.28ms | ID: req_1776349160260
+2026-04-16 15:19:21 | INFO | sundai | → GET /auth/me | ID: req_1776349161695
+2026-04-16 15:19:21 | INFO | sundai | ← GET /auth/me | 401 | 8.63ms | ID: req_1776349161695
+2026-04-16 15:19:28 | INFO | sundai | → GET /auth/me | ID: req_1776349168605
+2026-04-16 15:19:28 | INFO | sundai | ← GET /auth/me | 401 | 10.17ms | ID: req_1776349168605
+2026-04-16 15:19:36 | INFO | sundai | → GET /auth/me | ID: req_1776349176790
+2026-04-16 15:19:36 | INFO | sundai | ← GET /auth/me | 401 | 11.98ms | ID: req_1776349176790
+2026-04-16 15:19:37 | INFO | sundai | → GET /auth/me | ID: req_1776349177321
+2026-04-16 15:19:37 | INFO | sundai | ← GET /auth/me | 401 | 16.49ms | ID: req_1776349177321
+2026-04-16 16:35:11 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 16:35:11 | INFO | sundai | Ambiente: PRODUCTION
+2026-04-16 16:35:11 | INFO | sundai | Database: PostgreSQL
+2026-04-16 16:35:22 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 16:35:22 | INFO | sundai | Ambiente: PRODUCTION
+2026-04-16 16:35:22 | INFO | sundai | Database: PostgreSQL
+2026-04-16 16:36:01 | INFO | sundai | → GET /docs | ID: req_1776353761506
+2026-04-16 16:36:01 | INFO | sundai | ← GET /docs | 404 | 1.54ms | ID: req_1776353761506
+2026-04-16 16:36:01 | INFO | sundai | → GET /favicon.ico | ID: req_1776353761874
+2026-04-16 16:36:01 | INFO | sundai | ← GET /favicon.ico | 404 | 2.40ms | ID: req_1776353761874
+2026-04-16 16:36:09 | INFO | sundai | → GET /docs | ID: req_1776353769217
+2026-04-16 16:36:09 | INFO | sundai | ← GET /docs | 404 | 1.92ms | ID: req_1776353769217
+2026-04-16 16:36:11 | INFO | sundai | → GET /docs | ID: req_1776353771108
+2026-04-16 16:36:11 | INFO | sundai | ← GET /docs | 404 | 1.52ms | ID: req_1776353771108
+2026-04-16 16:38:44 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 16:38:44 | INFO | sundai | Ambiente: PRODUCTION
+2026-04-16 16:38:44 | INFO | sundai | Database: PostgreSQL
+2026-04-16 16:38:56 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 16:38:56 | INFO | sundai | Ambiente: PRODUCTION
+2026-04-16 16:38:56 | INFO | sundai | Database: PostgreSQL
+2026-04-16 16:39:05 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 16:39:05 | INFO | sundai | Ambiente: PRODUCTION
+2026-04-16 16:39:05 | INFO | sundai | Database: PostgreSQL
+2026-04-16 16:39:21 | INFO | sundai | → GET /docs | ID: req_1776353961513
+2026-04-16 16:39:21 | INFO | sundai | ← GET /docs | 200 | 2.20ms | ID: req_1776353961513
+2026-04-16 16:39:22 | INFO | sundai | → GET /openapi.json | ID: req_1776353962117
+2026-04-16 16:39:22 | INFO | sundai | ← GET /openapi.json | 200 | 147.25ms | ID: req_1776353962117
+2026-04-16 16:39:38 | INFO | sundai | → POST /auth/login | ID: req_1776353978532
+2026-04-16 16:39:39 | INFO | sundai | ← POST /auth/login | 401 | 951.24ms | ID: req_1776353978532
+2026-04-16 16:39:56 | INFO | sundai | → POST /auth/login | ID: req_1776353996405
+2026-04-16 16:39:57 | INFO | sundai | ← POST /auth/login | 401 | 862.54ms | ID: req_1776353996405
+2026-04-16 16:41:04 | INFO | sundai | → POST /auth/register | ID: req_1776354064232
+2026-04-16 16:41:06 | INFO | sundai | ← POST /auth/register | 201 | 2218.15ms | ID: req_1776354064232
+2026-04-16 16:41:55 | INFO | sundai | → POST /auth/login | ID: req_1776354115272
+2026-04-16 16:41:56 | INFO | sundai | ← POST /auth/login | 401 | 868.67ms | ID: req_1776354115272
+2026-04-16 16:42:15 | INFO | sundai | → POST /auth/login | ID: req_1776354135711
+2026-04-16 16:42:17 | INFO | sundai | ← POST /auth/login | 200 | 1579.98ms | ID: req_1776354135711
+2026-04-16 16:42:40 | INFO | sundai | → POST /auth/login | ID: req_1776354160051
+2026-04-16 16:42:41 | INFO | sundai | ← POST /auth/login | 200 | 1135.01ms | ID: req_1776354160051
+2026-04-16 16:43:23 | INFO | sundai | → PUT /auth/promover | ID: req_1776354203144
+2026-04-16 16:43:24 | INFO | sundai | ← PUT /auth/promover | 403 | 861.66ms | ID: req_1776354203144
+2026-04-16 16:45:27 | INFO | sundai | → GET /auth/me | ID: req_1776354327854
+2026-04-16 16:45:28 | INFO | sundai | ← GET /auth/me | 200 | 885.93ms | ID: req_1776354327854
+2026-04-16 16:46:51 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 16:46:51 | INFO | sundai | Ambiente: PRODUCTION
+2026-04-16 16:46:51 | INFO | sundai | Database: PostgreSQL
+2026-04-16 16:57:49 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 16:57:49 | INFO | sundai | Ambiente: PRODUCTION
+2026-04-16 16:57:49 | INFO | sundai | Database: PostgreSQL
+2026-04-16 16:58:03 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 16:58:03 | INFO | sundai | Ambiente: PRODUCTION
+2026-04-16 16:58:03 | INFO | sundai | Database: PostgreSQL
+2026-04-16 18:44:47 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 18:44:47 | INFO | sundai | Ambiente: DEVELOPMENT
+2026-04-16 18:44:47 | INFO | sundai | Database: SQLite
+2026-04-16 18:45:42 | INFO | sundai | → POST /auth/login | ID: req_1776361542408
+2026-04-16 18:45:42 | INFO | sundai | ← POST /auth/login | 200 | 494.20ms | ID: req_1776361542408
+2026-04-16 18:53:48 | INFO | sundai | → GET /docs | ID: req_1776362028596
+2026-04-16 18:53:48 | INFO | sundai | ← GET /docs | 200 | 80.10ms | ID: req_1776362028596
+2026-04-16 18:53:49 | INFO | sundai | → GET /openapi.json | ID: req_1776362029142
+2026-04-16 18:53:49 | INFO | sundai | ← GET /openapi.json | 200 | 557.91ms | ID: req_1776362029142
+2026-04-16 18:58:50 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-16 18:58:50 | INFO | sundai | Ambiente: DEVELOPMENT
+2026-04-16 18:58:50 | INFO | sundai | Database: SQLite
+2026-04-17 15:19:10 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-17 15:19:10 | INFO | sundai | Ambiente: DEVELOPMENT
+2026-04-17 15:19:10 | INFO | sundai | Database: SQLite
+2026-04-17 15:19:25 | INFO | sundai | → GET /docs | ID: req_1776435565210
+2026-04-17 15:19:25 | INFO | sundai | ← GET /docs | 200 | 3.60ms | ID: req_1776435565210
+2026-04-17 15:19:30 | INFO | sundai | → GET /docs | ID: req_1776435570416
+2026-04-17 15:19:30 | INFO | sundai | ← GET /docs | 200 | 1.09ms | ID: req_1776435570416
+2026-04-17 15:22:53 | INFO | sundai | 🚀 Iniciando SundAI v0.1.0
+2026-04-17 15:22:53 | INFO | sundai | Ambiente: DEVELOPMENT
+2026-04-17 15:22:53 | INFO | sundai | Database: SQLite
+2026-04-17 15:26:11 | INFO | sundai |  Iniciando SundAI v0.1.0
+2026-04-17 15:26:11 | INFO | sundai | Ambiente: DEVELOPMENT
+2026-04-17 15:26:11 | INFO | sundai | Database: SQLite
+2026-04-17 15:26:14 | INFO | sundai | Iniciando SundAI v0.1.0
+2026-04-17 15:26:14 | INFO | sundai | Ambiente: DEVELOPMENT
+2026-04-17 15:26:14 | INFO | sundai | Database: SQLite
