@@ -14,7 +14,7 @@ from app.core.security import (
 )
 from app.core.limiter import limiter
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter( tags=["auth"])
 
 
 @router.post("/register", status_code=201)
