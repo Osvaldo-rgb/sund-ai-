@@ -7,6 +7,9 @@ from app.database import init_db
 # Importações diretas (mais estáveis)
 from app.routers.auth import router as auth_router
 from app.routers.medical_chat import router as medical_chat_router
+from app.routers.cliniq import router as cliniq_router
+from app.routers.casos_clinicos import router as casos_clinicos_router
+from app.routers.unidades_saude import router as unidades_saude_router
 
 app = FastAPI(title="SundAI", version="0.1.0", docs_url="/docs")
 
@@ -22,8 +25,12 @@ app.add_middleware(
 init_db()
 
 # Routers
+
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(medical_chat_router, prefix="/medical-chat", tags=["chat"])
+app.include_router(casos_clinicos_router, prefix="/casos-clinicos", tags=["casos"])
+app.include_router(cliniq_router, prefix="/cliniq", tags=["cliniq"])
+app.include_router(unidades_saude_router, prefix="/unidades-saude", tags=["unidades"])
 
 @app.get("/health")
 async def health_check():
