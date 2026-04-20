@@ -16,7 +16,7 @@ from app.models.db_models import CasoClinico
 from app.core.deps import get_current_user
 from app.core.rbac import verificar_permissao, verificar_unidade_obrigatoria   # ← CORRIGIDO
 
-router = APIRouter(prefix="/casos-clinicos", tags=["casos-clinicos"])
+router = APIRouter(tags=["casos-clinicos"])
 
 
 class CasoClinicoCreate(BaseModel):

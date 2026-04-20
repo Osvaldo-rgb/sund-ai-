@@ -8,7 +8,7 @@ from app.core.cliniq_core import get_cliniq_response
 from app.core.deps import get_current_user
 from app.core.rbac import verificar_unidade_obrigatoria, verificar_unidade_saude
 
-router = APIRouter(prefix="/cliniq", tags=["cliniq"])
+router = APIRouter(tags=["cliniq"])
 
 
 class MensagemInput(BaseModel):

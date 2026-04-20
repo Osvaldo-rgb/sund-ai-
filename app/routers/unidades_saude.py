@@ -7,7 +7,7 @@ from app.models.db_models import UnidadeSaude, ProfissionalSaude
 from app.core.deps import get_current_user
 from app.core.rbac import verificar_permissao
 
-router = APIRouter(prefix="/unidades-saude", tags=["unidades-saude"])
+router = APIRouter(tags=["unidades-saude"])
 
 class UnidadeSaudeCreate(BaseModel):
     nome: str
